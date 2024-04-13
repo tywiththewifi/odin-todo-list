@@ -1,5 +1,9 @@
 // My ToDo app goes here!
 
 import './styles.css';
+import dom from './dom';
+import handlers from './handlers';
 
-console.log('my todo app will go here')
+dom.responsiveMenu();
+handlers.listenClicks();
+handlers.resizeWindow();
