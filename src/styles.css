@@ -7,6 +7,8 @@
     --light-grey: #F9F9F9;
     --white: #FFFFFF;
     --dark-grey: #717171;
+    --red: #C95555;
+
 }
 
 /* GENERAL STYLES */
@@ -343,6 +345,12 @@ transition: 0.3s;
 }
 .confirm-modal:hover {
 background-color: var(--dark-aqua);
+}
+
+.title-error {
+    margin: -15px 0 20px 0;
+    font-size: 13px;
+    color: var(--red);
 }
 
 /* PROJECTS MODAL RADIO BUTTONS - ICONS */

@@ -3,7 +3,7 @@ const dom = (() => {
     const sidebarMenu = document.querySelector('#sidebar-menu');
     const mainContent = document.querySelector('#main');
     const modal = document.querySelector('#modal');
-    const modalTitle = document.querySelector('.modal-title');
+    const modalName = document.querySelector('.modal-name');
     const modalTask = document.querySelector('.modal-task');
 
     function responsiveMenu() {
@@ -24,17 +24,29 @@ const dom = (() => {
         }
     }
 
-    function manipulateModal(state, title, task) {
+    function manipulateModal(state, name, task) {
         const form = document.querySelector('#form');
         form.reset();
         if (state === 'show') {
             modal.classList.remove('display-none');
             modal.classList.remove('display-block');
-            modalTitle.textContent = title;
+            modalName.textContent = name;
             modalTask.textContent = task;
         } else if (state === 'close') {
             modal.classList.remove('display-block');
             modal.classList.add('display-none');
+        }
+    }
+
+    function validateModal() {
+        const title = document.querySelector('#title');
+        const titleError = document.querySelector('.title-error');
+        const { icon } = document.forms.form;
+        if (title.value === '') {
+            titleError.classList.remove('display-none');
+            titleError.classList.add('display-block');
+        } else {
+            projects.addProjects(titel.value, icon.value);
         }
     }
 
@@ -55,6 +67,7 @@ const dom = (() => {
         responsiveMenu,
         toggleMenu,
         manipulateModal,
+        validateModal,
     };
 })();
 
