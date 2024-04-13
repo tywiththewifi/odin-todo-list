@@ -132,7 +132,7 @@ transform: rotate(-45deg);
     overflow: auto;
     width: 300px;
     height: 100%;
-    padding-top: 20px;
+    padding-top: 40px 20px;
     background-color: var(--light-grey);
     transition: transform 250ms;
 }
@@ -140,6 +140,7 @@ transform: rotate(-45deg);
 .nav-link {
     display: block;
     margin: 20px;
+    margin-bottom: 20px;
     padding: 12px 20px;
     background-color: var(--white);
     font-size: 18px;
@@ -150,7 +151,7 @@ transform: rotate(-45deg);
     transition: .3s;
 }
 
-.nav-projects-list i:hover {
+.float-right i:hover {
     transform: scale(1.2);
 }
 
@@ -169,8 +170,10 @@ transform: rotate(-45deg);
 }
 
 .nav-projects-title {
-    padding: 80px 40px 0px 40px;
+    margin: 80px 20px 20px 20px;
+    padding: 0 20px 20px 20px;
     font-size: 18px;
+    border-bottom: 1px solid var(--dark-grey);
 }
 
 /* TOOLTIP */
@@ -228,12 +231,16 @@ transform: rotate(-45deg);
 
 /* FOOTER */
 #footer {
-    margin: 120px 0;
+    margin-top: 80px;
+    margin-left: 20px;
+    margin-right: 20px;
     text-align: center;
+    border-top: 1px solid var(--dark-grey);
 }
 
 .crafted-by {
-    margin: 0;
+    margin: 10px;
+    font-size: 15px;
 }
 
 .footer-link {
