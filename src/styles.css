@@ -34,6 +34,7 @@ input:focus, button:focus {
     outline: none;
 }
 
+/* Alignment */
 .padding-right {
     padding-right: 5px;
 }
@@ -46,6 +47,7 @@ input:focus, button:focus {
     cursor: pointer;
 }
 
+/* Toggle Menu */
 .show-sidebar {
     -webkit-transform: translateX(0);
     transform: translateX(0);
@@ -68,12 +70,16 @@ input:focus, button:focus {
     background-color: rgba(104, 104, 104, 0.5);
 }
 
-.display-block {
+.show {
     display: block;
 }
 
-.display-none {
+.hide {
     display: none;
+}
+
+.hover-icon:hover {
+    cursor: pointer;
 }
 
 /* HEADER */
@@ -139,6 +145,11 @@ transform: rotate(-45deg);
     transition: transform 250ms;
 }
 
+#sidebar-menu p {
+    display: inline-block;
+    padding-left: 4px;
+}
+
 .nav-link {
     display: block;
     margin: 20px;
@@ -173,7 +184,8 @@ transform: rotate(-45deg);
 
 .nav-projects-title {
     margin: 80px 20px 20px 20px;
-    padding: 0 20px 20px 20px;
+    padding: 0 20px 10px 20px;
+    width: 260px;
     font-size: 18px;
     border-bottom: 1px solid var(--dark-grey);
 }

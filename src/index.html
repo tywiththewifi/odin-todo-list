@@ -20,43 +20,46 @@
     <!-- SIDE MENU -->
     <nav id="sidebar-menu">
         <div class="nav-links">
-            <a href="#" class="nav-link selected-link">
-                <i class="fal fa-calendar-alt padding-right"></i>
-                All
+            <a class="nav-link selected-link task-link" href="#">
+                <i class="fal fa-calendar-alt task-icon padding-right"></i>
+                <p class="task-text">All</p>
             </a>
-            <a href="#" class="nav-link">
-                <i class="fal fa-calendar-alt padding-right"></i>
-                Today
+            <a href="#" class="nav-link task-link">
+                <i class="fal fa-calendar-day task-icon padding-right"></i>
+                <p class="task-text">Today</p>
             </a>
-            <a href="#" class="nav-link">
-                <i class="fal fa-calendar-alt padding-right"></i>
-                Week
+            <a href="#" class="nav-link task-link">
+                <i class="fal fa-calendar-week task-icon padding-right"></i>
+                <p class="task-text">Week</p>
             </a>
-            <a href="#" class="nav-link">
-                <i class="fal fa-calendar-alt padding-right"></i>
-                Important
+            <a href="#" class="nav-link task-link">
+                <i class="fal fa-calendar-star task-icon padding-right"></i>
+                <p class="task-text">Important</p>
             </a>
         </div>
+        <!-- PROJECTS -->
         <div id="nav-projects">
-            <p class="nav-projects-title">
+            <div class="nav-projects-title">
                 <i class="fal fa-tasks-alt padding-right"></i>
-                Projects
+                <p>Projects</p>
                 <i class="fal fa-plus-circle add-project hover-icon floating-right">
-                    <span class="tooltip-text">Add New Project</span>
+                    <span class="add-project tooltip-text">Add New Project</span>
                 </i>
-            </p>
-        </div>
-        <div class="nav-projects-list">
-            <a href="#" class="nav-link">Gardening
+            </div>
+            <a href="#" class="nav-link project-link selected-link">
+                <i class="fal fa-book fa-fw project-icon padding-right"></i>
+                <p class="project-text">Learning</p>
                 <div class="float-right">
-                  <i class="fal fa-edit hover-icon"></i>
-                  <i class="fal fa-trash-alt hover-icon"></i>
+                <i class="fal fa-edit padding-right hover-icon"></i>
+                <i class="fal fa-trash-alt hover-icon"></i>
                 </div>
             </a>
-            <a href="#" class="nav-link">Exercising
+            <a href="#" class="nav-link project-link">
+                <i class="fal fa-book fa-fw project-icon padding-right"></i>
+                <p class="project-text">Exercise</p>
                 <div class="float-right">
-                  <i class="fal fa-edit hover-icon"></i>
-                  <i class="fal fa-trash-alt hover-icon"></i>
+                <i class="fal fa-edit padding-right hover-icon"></i>
+                <i class="fal fa-trash-alt hover-icon"></i>
                 </div>
             </a>
         </div>
@@ -74,10 +77,12 @@
     </main>
 
     <!-- MODAL -->
-    <div class="show display-none" id="modal">
+    <div class="close hide" id="modal">
         <div class="modal-card">
             <div class="modal-header">
-                <h2><span class="modal-title"></span></h2>
+                <h2>
+                    <span class="modal-name"></span>
+                </h2>
                 <i class="fal fa-times close-modal close"></i>
             </div>
             <div class="modal-content">
@@ -87,9 +92,9 @@
                             Title
                         </label>
                         <input type="text" name="title" id="title" autocomplete="off">
-                        <p class="title-error display-none">Please fill out this field.</p>
+                        <p class="title-error hide">Please fill out this field.</p>
                     </div>
-                    <div class="radio-form display-block">
+                    <div class="radio-form show">
                         <p>Icon</p>
                         <!-- RADIO BUTTONS -->
                         <div class="project-icons">
@@ -125,8 +130,8 @@
                             </label>
                             <label class="radio radio-before">
                                 <span class="radio-input">
-                                  <input type="radio" id="pizza" name="icon" value="fa-pizza">
-                                  <span class="radio-control"><i class="fal fa-pizza fa-fw"></i></span>
+                                  <input type="radio" id="pizza" name="icon" value="fa-pizza-slice">
+                                  <span class="radio-control"><i class="fal fa-pizza-slice fa-fw"></i></span>
                                 </span>
                             </label>
                             <label class="radio-before">
@@ -146,7 +151,7 @@
                 </form>
                 <div class="modal-options">
                     <button class="cancel-modal close">Cancel</button>
-                    <button type="button" class="confirm-modal"><span class="modal-task"></span></button>
+                    <button type="button" class="modal-task confirm-modal"></button>
                 </div>
             </div> 
         </div>
