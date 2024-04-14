@@ -54,7 +54,7 @@ const dom = (() => {
             titleError.classList.add('show');
         } else {
             projects.addProjects(titel.value, icon.value);
-            showProject(icon.value, title.value);
+            addNewProject(icon.value, title.value);
             manipulateModal('close');
         }
     }
@@ -94,9 +94,9 @@ const dom = (() => {
         } else if (target.classList.contains('project-link')) {
             target.classList.add('selected-link');
         }
-    }
+    };
 
-    function showProject(icon, name) {
+    function addNewProject(icon, name) {
         const navProjects = document.querySelector('#nav-projects');
         const projectLink = document.createElement('a');
         const projectIcon = document.createElement('i');
@@ -123,7 +123,7 @@ const dom = (() => {
         projectLink.appendChild(projectName);
         projectLink.appendChild(projectIconsDiv)
         navProjects.appendChild(projectLink);
-    }
+    };
 
     return {
         responsiveMenu,
@@ -132,8 +132,9 @@ const dom = (() => {
         toggleMenu,
         selectTask,
         selectProject,
-        showProject,
+        addNewProject,
     };
+    
 })();
 
 export default dom;

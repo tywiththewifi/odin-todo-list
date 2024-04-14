@@ -47,29 +47,7 @@ input:focus, button:focus {
     cursor: pointer;
 }
 
-/* Toggle Menu */
-.show-sidebar {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-}
-
-.hide-sidebar {
-    -webkit-transform: translateX(-300px);
-    transform: translateX(-300px);
-}
-
-.expand-main {
-    margin-left: 0px;
-}
-
-.contract-main {
-    margin-left: 300px;
-}
-
-.darker-background {
-    background-color: rgba(104, 104, 104, 0.5);
-}
-
+/* Visual Styles */
 .show {
     display: block;
 }
@@ -111,6 +89,28 @@ input:focus, button:focus {
     cursor: pointer;
 }
 
+.show-sidebar {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+}
+
+.hide-sidebar {
+    -webkit-transform: translateX(-300px);
+    transform: translateX(-300px);
+}
+
+.expand-main {
+    margin-left: 0px;
+}
+
+.contract-main {
+    margin-left: 300px;
+}
+
+.darker-background {
+    background-color: rgba(104, 104, 104, 0.5);
+}
+
 .burger-line {
     height: 2px;
     margin-bottom: 3px;
@@ -143,6 +143,7 @@ transform: rotate(-45deg);
     padding-top: 40px 20px;
     background-color: var(--light-grey);
     transition: transform 250ms;
+    vertical-align: middle;
 }
 
 #sidebar-menu p {
@@ -180,14 +181,6 @@ transform: rotate(-45deg);
 .nav-link:not(.selected-link):hover {
     border: 1px solid var(--light-green);
     transition: .3s;
-}
-
-.nav-projects-title {
-    margin: 80px 20px 20px 20px;
-    padding: 0 20px 10px 20px;
-    width: 260px;
-    font-size: 18px;
-    border-bottom: 1px solid var(--dark-grey);
 }
 
 /* TOOLTIP */
@@ -229,6 +222,21 @@ transform: rotate(-45deg);
     opacity: 1;
 }
 
+/* PROJECTS */
+.nav-projects-title {
+    margin: 80px 20px 20px 20px;
+    padding: 0 20px 10px 20px;
+    width: 260px;
+    font-size: 18px;
+    border-bottom: 1px solid var(--dark-grey);
+}
+
+.project-text {
+    white-space: nowrap;
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 
 /* MAIN CONTENT */
@@ -297,66 +305,66 @@ transform: rotate(-45deg);
     border-top-right-radius: 5px;
 }
 .modal-header h2 {
-margin: 0;
-padding: 20px;
+    margin: 0;
+    padding: 20px;
 }
 .fa-times {
-height: 20px;
+    height: 20px;
 }
 .close-modal {
-margin: 10px 20px;
-color: var(--white);
-font-size: 20px;
-font-weight: 900;
-cursor: pointer;
+    margin: 10px 20px;
+    color: var(--white);
+    font-size: 20px;
+    font-weight: 900;
+    cursor: pointer;
 }
 .modal-content {
-display: flex;
-flex-direction: column;
-padding: 20px;
-background-color: var(--white);
-border-bottom-right-radius: 5px;
-border-bottom-left-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: var(--white);
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 #form input {
-width: 100%;
-margin: 5px 0 20px 0;
-padding: 10px;
-color: var(--dark-grey);
-border: 1px solid var(--grey);
-border-radius: 3px;
+    width: 100%;
+    margin: 5px 0 20px 0;
+    padding: 10px;
+    color: var(--dark-grey);
+    border: 1px solid var(--grey);
+    border-radius: 3px;
 }
 #form input:focus {
-border-color: var(--aqua);
-transition: 0.3s;
+    border-color: var(--aqua);
+    transition: 0.3s;
 }
 .modal-options {
-display: flex;
-justify-content: flex-end;
-align-items: center;
-margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 20px;
 }
 .cancel-modal {
-background-color: var(--white);
-color: var(--dark-grey);
-border: 1px solid var(--grey);
-border-radius: 3px;
-transition: 0.3s;
+    background-color: var(--white);
+    color: var(--dark-grey);
+    border: 1px solid var(--grey);
+    border-radius: 3px;
+    transition: 0.3s;
 }
 .cancel-modal:hover {
-color: var(--dark-aqua);
-border-color: var(--dark-aqua);
+    color: var(--dark-aqua);
+    border-color: var(--dark-aqua);
 }
 .confirm-modal {
-margin-left: 10px;
-background-color: var(--light-aqua);
-color: var(--white);
-border: 1px solid transparent;
-border-radius: 3px;
-transition: 0.3s;
+    margin-left: 10px;
+    background-color: var(--light-aqua);
+    color: var(--white);
+    border: 1px solid transparent;
+    border-radius: 3px;
+    transition: 0.3s;
 }
 .confirm-modal:hover {
-background-color: var(--dark-aqua);
+    background-color: var(--dark-aqua);
 }
 
 .title-error {
@@ -367,41 +375,41 @@ background-color: var(--dark-aqua);
 
 /* PROJECTS MODAL RADIO BUTTONS - ICONS */
 .project-icons {
-display: -ms-grid;
-display: grid;
-grid-template-columns: repeat(7, -webkit-min-content);
--ms-grid-columns: -webkit-min-content 10px -webkit-min-content 10px -webkit-min-content 10px -webkit-min-content 10px -webkit-min-content 10px -webkit-min-content 10px -webkit-min-content;
--ms-grid-columns: min-content 10px min-content 10px min-content 10px min-content 10px min-content 10px min-content 10px min-content;
-grid-template-columns: repeat(8, min-content);
-grid-gap: 4px;
-margin: 15px 0;
+    display: -ms-grid;
+    display: grid;
+    grid-template-columns: repeat(7, -webkit-min-content);
+    -ms-grid-columns: -webkit-min-content 10px -webkit-min-content 10px -webkit-min-content 10px -webkit-min-content 10px -webkit-min-content 10px -webkit-min-content 10px -webkit-min-content;
+    -ms-grid-columns: min-content 10px min-content 10px min-content 10px min-content 10px min-content 10px min-content 10px min-content;
+    grid-template-columns: repeat(8, min-content);
+    grid-gap: 4px;
+    margin: 15px 0;
 }
 .project-icons input {
-position: absolute;
-opacity: 0;
-width: 0;
-height: 0;
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 .project-icons i {
-width: 40px;
+    width: 40px;
 }
 .radio-control {
-padding: 5px 0;
-border: 1px solid var(--grey);
-border-radius: 5px;
-font-size: 25px;
-cursor: pointer;
-transition: 0.3s;
+    padding: 5px 0;
+    border: 1px solid var(--grey);
+    border-radius: 5px;
+    font-size: 25px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 .radio-control:hover {
-border-color: var(--dark-aqua);
-color: var(--dark-aqua);
-transition: 0.3s;
+    border-color: var(--dark-aqua);
+    color: var(--dark-aqua);
+    transition: 0.3s;
 }
 .project-icons input:focus + .radio-control,
 .radio-before input:checked + .radio-control {
-color: var(--dark-aqua);
-border: 1px solid var(--dark-aqua);
+    color: var(--dark-aqua);
+    border: 1px solid var(--dark-aqua);
 }
   
 
