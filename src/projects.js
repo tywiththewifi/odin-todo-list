@@ -10,6 +10,13 @@ const projects = (() => {
         }
     }
 
+    function deleteProject(index) {
+        if (index > -1) {
+            projectList.splice(index, 1);
+        }
+        dom.showProjects();
+    }
+
     function addProject(icon, title) {
         const project = new Project(icon, title);
         projectsList.push(project);
@@ -26,6 +33,7 @@ const projects = (() => {
         projectList,
         addProject,
         editProject,
+        deleteProject,
     };
 })();
 

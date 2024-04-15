@@ -23,19 +23,21 @@ const handlers = (() => {
                     || target.classList.contains('nav-link-text')) {
                 dom.selectMenuLink(target);
             
-            // ADD PROJECT MODAL
+            // MODAL TO ADD PROJECT
             } else if (target.classList.contains('add-project')) {
-                dom.manipulateModal('show', 'Add New Project', 'Add');
+                dom.manipulateModal('show', 'Add Project', 'Add');
 
             // MODAL TO EDIT PROJECT
             } else if (target.classList.contains('edit-project')) {
                 projectIndex = target.getAttribute('data-index');
-                dom.manipulateModal('show', 'Edit Your Project', 'Edit');
+                dom.manipulateModal('show', 'Edit Project', 'Edit');
                 dom.editProject(projectIndex);
 
             // MODAL TO DELETE PROJECT
             } else if (target.classList.contains('delete-project')) {
                 dom.manipulateModal('show', 'Delete Your Project', 'Delete');
+                projectIndex = target.getAttribute('data-index');
+                dom.manipulateModal('show', 'Delete Project', 'Delete', projectIndex);
 
             // VALIDATE MODAL INFO
             } else if (target.classList.contains('confirm-modal')) {
@@ -45,7 +47,7 @@ const handlers = (() => {
                 } else if (target.textContent === 'Edit') {
                 dom.validateModal('edit', projectIndex);
                 } else if (target.textContent === 'Delete') {
-                dom.validateModal('delete');
+                dom.validateModal('delete', projectIndex);
                 }
 
             // CLOSE MODAL
