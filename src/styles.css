@@ -19,14 +19,13 @@
     box-sizing: border-box;
 }
 
-html {
-    margin: 0px;
-    padding: 0px;
-}
+
 
 #body {
     font-family: 'Roboto', sans-serif;
-    color: var(--grey)
+    color: var(--grey);
+    margin: 0px;
+    padding: 0px;
 }
 
 p {
@@ -219,6 +218,20 @@ transform: rotate(-45deg);
     margin: 0;
     padding: 40px;
     text-align: center;
+}
+
+.main-title-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-title-icon {
+    font-size: 35px;
+}
+
+.main-title-text {
+    font-weight: 500;
 }
 
 /* FOOTER */

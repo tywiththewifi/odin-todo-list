@@ -1,5 +1,8 @@
 import dom from "./dom";
 
+console.log('Projects module loaded');
+
+
 const projects = (() => {
     const projectList = [{ icon: 'fa-screwdriver-wrench', title: 'Craft Example', tasks: ['Show Task Demo'] }];
 

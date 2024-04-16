@@ -1,5 +1,6 @@
 import projects from './projects';
 
+console.log('DOM module loaded');
 
 const dom = (() => {
     const toggleMenuIcon = document.querySelector('.toggle-menu');
@@ -8,6 +9,8 @@ const dom = (() => {
     const modal = document.querySelector('#modal');
     const projectTitle = document.querySelector('#project-title');
     const projectTitleError = document.querySelector('.project-title-error');
+    const mainTitleIcon = document.querySelector('.main-title-icon');
+    const mainTitleText = document.querySelector('.main-title-text');
 
     function responsiveMenu() {
         if (window.innerWidth <= 1000) {
@@ -34,7 +37,6 @@ const dom = (() => {
 
         }
     }
-
     
     function manipulateModal(state, name, task, index) {
         const modalHeader = modal.querySelector('.modal-header');
@@ -157,6 +159,9 @@ const dom = (() => {
     }
 
     function showProjects() {
+
+        console.log('Preparing to display projects');
+
         const projectsLinks = document.querySelector('.projects-links-div');
         const projectsCount = document.querySelector('.projects-count');
         
@@ -210,7 +215,48 @@ const dom = (() => {
           projectsLinks.appendChild(projectLink);
         }
         manipulateModal('close');
+        console.log('Projects displayed');
+
       }
+
+      function showMainTitle(index) {
+        const allMenuIcons = document.querySelectorAll('.menu-icon');
+        console.log('allMenuIcons:', allMenuIcons.length);
+        console.log('Current index:', index);
+        
+
+        if (index < 0 || index >= allMenuIcons.length) {
+            console.error('Index out of bounds:', index);
+            return;
+        }
+        
+        const menuIcon = allMenuIcons[index].getAttribute('data-icon');
+        const menuTexts = document.querySelectorAll('.menu-text');
+        mainTitleIcon.classList.add('fa-solid', menuIcon, 'main-title-icon', 'fa-fw', 'padding-right');
+        mainTitleText.textContent = menuTexts[index].textContent;
+
+    }
+    
+
+    function changeMainTitle(target, index) {
+        mainTitleIcon.className = '';
+
+        // TITLE OF TASKS FROM MENU
+        if (target.classList.contains('menu-link') 
+        || target.classList.contains('menu-icon') 
+        || target.classList.contains('menu-text')) {
+            showMainTitle(index);
+        } else if (target.classList.contains('project-link') 
+        || target.classList.contains('project-icon') 
+        || target.classList.contains('project-text') 
+        || target.classList.contains('project-icon-and-text-div') 
+        || target.classList.contains('project-default-icons-div')) {
+            const projectIcon = projects.projectList[index].icon;
+            mainTitleIcon.classList.add('fa-solid', projectIcon, 'main-title-icon', 'fa-fw', 'padding-right');
+            mainTitleText.textContent = projects.projectList[index].title;
+        }
+    }
+
     
     return {
         responsiveMenu,
@@ -220,6 +266,8 @@ const dom = (() => {
         selectMenuLink,
         editProject,
         showProjects,
+        showMainTitle,
+        changeMainTitle,
     };
 
 })();

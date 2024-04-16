@@ -1,5 +1,8 @@
 import dom from './dom';
 
+console.log('Handlers module loaded');
+
+
 const handlers = (() => {
     let index = 0;
 
@@ -10,7 +13,19 @@ const handlers = (() => {
 
     function listenClicks() {
         document.addEventListener('click', (event) => {
+            console.log('Click event triggered:', event.target);
+
             const { target } = event;
+
+            if (event.target.matches('.select')) {
+                let index = event.target.getAttribute('data-index');
+                console.log('Clicked on .select, index set to:', index, 'Event target:', event.target);
+                if (index) {
+                    dom.showMainTitle(index);
+                } else {
+                    console.error('Index is null', 'Event target:', event.target);
+                }
+            }
 
             // TOGGLE SIDE MENU
             if (target.classList.contains('toggle-menu') 
@@ -21,6 +36,7 @@ const handlers = (() => {
             } else if (target.classList.contains('select')) {
                 index = target.getAttribute('data-index');
                 dom.selectMenuLink(target);
+                dom.changeMainTitle(target, index);
             
             // MODAL TO ADD PROJECT
             } else if (target.classList.contains('add-project')) {
@@ -30,13 +46,13 @@ const handlers = (() => {
             } else if (target.classList.contains('edit-project')) {
                 index = target.getAttribute('data-index');
                 dom.selectMenuLink(target);
-                dom.manipulateModal('show', 'Edit Project', 'Edit', projectIndex);
+                dom.manipulateModal('show', 'Edit Project', 'Edit', index);
                 dom.editProject(index);
 
             // MODAL TO DELETE PROJECT
             } else if (target.classList.contains('delete-project')) {
                 index = target.getAttribute('data-index');
-                dom.selectMenuLink('index');
+                dom.selectMenuLink(target);
                 dom.manipulateModal('show', 'Delete Project', 'Delete', index);
 
             // VALIDATE MODAL INFO
