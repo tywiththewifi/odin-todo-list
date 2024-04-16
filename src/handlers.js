@@ -30,7 +30,7 @@ const handlers = (() => {
             // MODAL TO EDIT PROJECT
             } else if (target.classList.contains('edit-project')) {
                 projectIndex = target.getAttribute('data-index');
-                dom.manipulateModal('show', 'Edit Project', 'Edit');
+                dom.manipulateModal('show', 'Edit Project', 'Edit', projectIndex);
                 dom.editProject(projectIndex);
 
             // MODAL TO DELETE PROJECT

@@ -131,13 +131,14 @@ const dom = (() => {
 
 
     function showProjects() {
-        const projectsLinks = document.querySelector('#projects-links-div');
+        const projectsLinks = document.querySelector('.projects-links-div');
         projectsLinks.textContent = '';
 
-        for (let i = 0; i < projects.projectsList.length; i += 1) {
+        for (let i = 0; i < projects.projectList.length; i += 1) {
           const projectLink = document.createElement('a');
           const projectIcon = document.createElement('i');
           const projectText = document.createElement('p');
+          const projectIconTextDiv = document.createElement('div');
           const projectIconsDiv = document.createElement('div');
           const projectEditIcon = document.createElement('i');
           const projectTrashIcon = document.createElement('i');
@@ -148,24 +149,25 @@ const dom = (() => {
           projectLink.classList.add('nav-link', 'project-link');
 
           // PROJECT SELECTED ICON
-          projectIcon.classList.add('fal', 'project-icon', projects.projectsList[i].icon, 'fa-fw', 'padding-right');
+          projectIcon.classList.add('fa-solid', 'project-icon', projects.projectList[i].icon, 'fa-fw', 'padding-right');
           projectIconsDiv.classList.add('float-right');
 
           // PROJECT TEXT
           projectText.classList.add('nav-link-text');
-          projectText.textContent = projects.projectsList[i].title;
+          projectText.textContent = projects.projectList[i].title;
 
         // PROJECT DEFAULT ICONS
-          projectEditIcon.classList.add('fal', 'fa-edit', 'padding-right', 'edit-project', 'hover-icon');
+          projectEditIcon.classList.add('fa-regular', 'fa-pen-to-square', 'padding-right', 'edit-project', 'hover-icon');
           projectEditIcon.setAttribute('data-index', i)
-          projectTrashIcon.classList.add('fal', 'fa-trash-alt', 'delete-project', 'hover-icon');
+          projectTrashIcon.classList.add('fa-regular', 'fa-trash-can', 'delete-project', 'hover-icon');
           projectTrashIcon.setAttribute('data-index', i);
 
           // APPENDS
           projectIconsDiv.appendChild(projectEditIcon);
           projectIconsDiv.appendChild(projectTrashIcon);
-          projectLink.appendChild(projectIcon);
-          projectLink.appendChild(projectText);
+          projectIconTextDiv.appendChild(projectIcon);
+          projectIconTextDiv.appendChild(projectText);
+          projectLink.appendChild(projectIconTextDiv);
           projectLink.appendChild(projectIconsDiv);
           projectsLinks.appendChild(projectLink);
         }
