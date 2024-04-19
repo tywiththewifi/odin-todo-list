@@ -7,8 +7,8 @@ const dom = (() => {
     const sidebarMenu = document.querySelector('#sidebar-menu');
     const mainContent = document.querySelector('#main');
     const modal = document.querySelector('#modal');
-    const projectTitle = document.querySelector('#project-title');
-    const projectTitleError = document.querySelector('.project-title-error');
+    const projectTitle = document.querySelector('#todo-title');
+    const projectTitleError = document.querySelector('.todo-title-error');
     const mainTitleIcon = document.querySelector('.main-title-icon');
     const mainTitleText = document.querySelector('.main-title-text');
 
@@ -40,6 +40,8 @@ const dom = (() => {
     
     function manipulateModal(state, name, task, index) {
         const modalHeader = modal.querySelector('.modal-header');
+        const modalTitle = modal.querySelector('.modal-title');
+        const modalTask = modal.querySelector('.modal-task');
         const deletionText = modal.querySelector('.deletion-text');
         const confirmButton = modal.querySelector('.confirm-modal');
         const cancelButton = modal.querySelector('.cancel-modal');
@@ -55,14 +57,23 @@ const dom = (() => {
         confirmButton.classList.remove('confirm-deletion');
 
         if (state === 'show') {
-            const modalTitle = modal.querySelector('.modal-title');
-            const modalTask = modal.querySelector('.modal-task');
+            const modalIconsDiv = modal.querySelector('.radio-form');
+            const modalTasksDiv = modal.querySelector('.modal-tasks-div');
             modal.classList.remove('hide');
             modalTitle.textContent = name;
             modalTask.textContent = task;
 
+            modalIconsDiv.classList.remove('hide');
+            modalIconsDiv.classList.add('show');
+            modalTasksDiv.classList.add('hide');
+
+            if (title === 'Add task') {
+                modalIconsDiv.classList.remove('show');
+                modalIconsDiv.classList.add('hide');
+                modalTasksDiv.classList.remove('hide');
+            }
+
         } else if (task === 'delete') {
-            const deletionProjectTitle = modal.querySelector('.project-title');
             modalHeader.classList.add('deletion-modal-header');
             deletionText.classList.remove('hide');
             deletionProjectTitle.textContent = projects.projectList[index].title;
@@ -180,22 +191,22 @@ const dom = (() => {
 
         
           // PROJECT ICON/TEXT AND DEFAULT ICONS DIVS
-        projectIconTextDiv.classList.add('project-icon-and-text-div', 'select');
+        projectIconTextDiv.classList.add('project-icon-and-text-div', 'project', 'select');
         projectIconTextDiv.setAttribute('data-index', i);
-        projectIconsDiv.classList.add('project-default-icons-div', 'select');
+        projectIconsDiv.classList.add('project-default-icons-div', 'project', 'select');
         projectIconsDiv.setAttribute('data-index', i);
 
           // PROJECT LINK
           projectLink.setAttribute('href', '#');
           projectLink.setAttribute('data-index', i);
-          projectLink.classList.add('nav-link', 'project-link', 'select');
+          projectLink.classList.add('nav-link', 'project-link', 'project', 'select');
 
           // PROJECT ICON
-          projectIcon.classList.add('fa-solid', 'project-icon', projects.projectList[i].icon, 'fa-fw', 'padding-right');
+          projectIcon.classList.add('fa-solid', 'project-icon', projects.projectList[i].icon, 'fa-fw', 'project', 'select', 'padding-right');
           projectIcon.setAttribute('data-index', i);
 
           // PROJECT TEXT
-          projectText.classList.add('project-text', 'select');
+          projectText.classList.add('project-text', 'project', 'select');
           projectText.textContent = projects.projectList[i].title;
           projectText.setAttribute('data-index', i);
 
@@ -219,6 +230,7 @@ const dom = (() => {
 
       }
 
+        //   MAIN CONTENT
       function showMainTitle(index) {
         const allMenuIcons = document.querySelectorAll('.menu-icon');
         console.log('allMenuIcons:', allMenuIcons.length);

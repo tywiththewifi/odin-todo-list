@@ -4,13 +4,12 @@ console.log('Projects module loaded');
 
 
 const projects = (() => {
-    const projectList = [{ icon: 'fa-screwdriver-wrench', title: 'Craft Example', tasks: ['Show Task Demo'] }];
+    const projectList = [];
 
     class Project {
-        constructor(icon, title, tasks) {
+        constructor(icon, title) {
             this.icon = icon;
             this.title = title;
-            this.tasks = tasks;
         }
     }
 
@@ -23,7 +22,7 @@ const projects = (() => {
 
     function addProject(icon, title) {
         const project = new Project(icon, title);
-        projectsList.push(project);
+        projectList.push(project);
         console.log(project, projectList);
     }
 

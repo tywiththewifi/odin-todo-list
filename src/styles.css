@@ -37,7 +37,7 @@ button {
     cursor: pointer;
 }
 
-input:focus, button:focus {
+input:focus, button:focus, textarea:focus, select:focus {
     outline: none;
 }
 
@@ -182,6 +182,38 @@ transform: rotate(-45deg);
 
 .nav-link:not(.selected-link):hover {
     border: 1px solid var(--light-green);
+    transition: .3s;
+}
+
+/* TASKS */
+#tasks-div {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px;
+}
+
+.tasks-title-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 20px;
+    border-bottom: 1px solid var(--dark-grey);
+}
+
+.tasks-title {
+    display: flex;
+}
+
+.todo {
+    display: flex;
+    padding: 20px;
+    border-bottom: 1px solid var(--light-grey);
+    transition: .3s;
+}
+
+.todo:hover {
+    box-shadow: inset 0 -60px 0 0 var(--light-grey);
     transition: .3s;
 }
 
@@ -350,20 +382,28 @@ transform: rotate(-45deg);
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
 }
-#form input {
+
+#form input, .task-description, .task-priority {
     width: 100%;
     margin: 5px 0 20px 0;
     padding: 10px;
     color: var(--dark-grey);
     border: 1px solid var(--grey);
     border-radius: 3px;
+    background-color: var(--white);
+    transition: .3s;
 }
-#form input:focus {
+
+#form input:focus, .task-description:focus, .task-priority:focus {
     border-color: var(--aqua);
     transition: .3s;
 }
 
-.project-title-error {
+.title-star {
+    color: var(--red);
+}
+
+.todo-title-error {
     margin: -15px 0 20px 0;
     font-size: 13px;
     color: var(--red);
@@ -401,11 +441,16 @@ transform: rotate(-45deg);
     background-color: var(--dark-aqua);
 }
 
+/* MODAL TO ADD A TASK */
+.task-description {
+    width: 100%;
+}
+
 /* MODAL TO DELETE PROJECT */
 .deletion-modal-header {
     background: linear-gradient(90deg, var(--dark-red) 0%, var(--red) 100%);
   }
-  .project-title {
+  .todo-title {
     font-weight: 900;
   }
   .cancel-deletion:hover {

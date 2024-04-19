@@ -23,7 +23,7 @@
     <!-- SIDE MENU -->
     <nav id="sidebar-menu">
 
-        <!-- TASKS -->
+        <!-- MENU TASKS -->
         <div class="nav-links">
             <a class="nav-link menu-link select selected-link " data-index="0" href="#">
                 <i class="fa-solid fa-calendar-days nav-link-icon menu-icon select padding-right" data-index="0" data-icon="fa-calendar-days"></i>
@@ -43,7 +43,7 @@
             </a>
         </div>
 
-        <!-- PROJECTS -->
+        <!-- MENU PROJECTS -->
         <div id="nav-projects">
             <div class="nav-projects-title">
                 <p>Projects (<span class="projects-count"></span>)</p>
@@ -53,14 +53,7 @@
             </div>
             <div class="projects-links-div">
                 <!-- Projects list goes here -->
-                <a href="#" class="nav-link selected-link">
-                    <i class="fal fa-book fa-fw project-icon padding-right"></i>
-                    <p class="project-text">Learning</p>
-                    <div class="float-right">
-                    <i class="fal fa-edit padding-right hover-icon"></i>
-                    <i class="fal fa-trash-alt hover-icon"></i>
-                    </div>
-                </a>
+                
             </div>
         </div>
 
@@ -71,6 +64,8 @@
         </footer>
     </nav>
 
+    
+
     <!-- MAIN CONTENT -->
     <main id="main">
     <!-- main content goes here -->
@@ -79,6 +74,27 @@
     <div class="main-title-div">
         <i class="main-title-icon"></i>
         <h1 class="main-title-text"></h1>
+    </div>
+
+    <!-- TASKS -->
+    <div id="tasks-div">
+
+        <!-- TASKS TITLE -->
+        <div class="tasks-title-div">
+            <div class="tasks-title">
+                <p>Tasks (<span class="tasks-count"></span>)</p>
+            </div>
+            <i class="fa-solid fa-plus-circle add-task hover-element tooltip-icon">
+                <span class="add-task tooltip-text">Add New Task</span>
+            </i>
+        </div>
+
+        <!-- TODO LIST ITEMS -->
+        <div class="todo-list">
+            <!-- Todo list here -->
+        </div>
+
+
     </div>
 
     </main>
@@ -93,14 +109,15 @@
                 <i class="fa-regular fa-circle-xmark close-modal close"></i>
             </div>
             <div class="modal-content">
-                <p class="deletion-text hide">Are you sure?<br><br>Project <span class="project-title">${projectTitle}</span> will be gone forever!</p>
+                <p class="deletion-text hide">Are you sure?<br><br>
+                    Project <span class="todo-title"></span> will be gone forever!</p>
                 <form id="form" name="form" method="POST">
                     <div>
-                        <label for="project-title" id="project-title-label">
+                        <label for="todo-title" id="todo-title-label">
                             Title
                         </label>
-                        <input type="text" name="project-title" id="project-title" autocomplete="off">
-                        <p class="project-title-error hide">Please fill out this field.</p>
+                        <input type="text" name="todo-title" id="todo-title" autocomplete="off">
+                        <p class="todo-title-error hide">Please fill out this field.</p>
                     </div>
                     <div class="radio-form show">
                         <p>Icon</p>
@@ -157,6 +174,34 @@
                             </label>
                         </div>
                     </div>
+
+                    <!-- MODAL CONTENT FOR A TASK -->
+                    <!-- TASK DESCRIPTION -->
+                    <div class="modal-tasks-div hide">
+                        <div class="task-description-area">
+                            <label for="task-description">Description</label>
+                            <textarea class="task-description" cols="36" rows="3"></textarea>
+                        </div>
+                    
+
+                    <!-- TASK DUE DATE -->
+                    <div class="task-due-date">
+                        <label for="dueDate">Due Date</label>
+                        <input type="date" id="dueDate" name="dueDate">
+                    </div>
+
+                    <!-- TASK PRIORITY -->
+                    <div>
+                        <label for="priority">Priority</label>
+                        <select name="priority" class="task-priority">
+                            <option value="" disabled selected>How important is this task?</option>
+                            <option value="low">😴 It can wait a month...or two...</option>
+                            <option value="medium">😅 Somewhere between relax and focus</option>
+                            <option value="high">😤 Now or never!</option>
+                        </select>
+                    </div>
+                </div>
+
                 </form>
                 <div class="modal-options">
                     <button class="cancel-modal close">Cancel</button>
