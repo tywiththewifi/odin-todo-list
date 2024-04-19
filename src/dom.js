@@ -15,6 +15,7 @@ const dom = (() => {
     function responsiveMenu() {
         if (window.innerWidth <= 1000) {
             toggleMenuIcon.classList.remove('active');
+
             // HIDE SIDEBAR AND MAKE IT OPAQUE
             sidebarMenu.classList.remove('show-sidebar');
             sidebarMenu.classList.add('hide-sidebar');
@@ -25,12 +26,12 @@ const dom = (() => {
             mainContent.classList.add('expand-main');
         } else {
 
-            // SHOW SIDEBAR AND MAKE IT A BIT TRANSPARENT
+            // SHOW SIDEBAR AND MAKE MAIN CONTNET A BIT TRANSPARENT
             sidebarMenu.classList.remove('hide-sidebar');
             sidebarMenu.classList.add('show-sidebar');
             sidebarMenu.classList.remove('add-z-index');
 
-            // CONTRACT MAIN CONTENT AND MAKE IT OPAQUE
+            // CONTRACT MAIN CONTENT AND MAKE MAIN CONTENT OPAQUE
             mainContent.classList.remove('expand-main');
             mainContent.classList.add('contract-main');
             mainContent.classList.remove('inactive-main');
@@ -88,20 +89,21 @@ const dom = (() => {
 
     function validateModal(task, index) {
         const { projectIcon } = document.forms.form;
+        const projectIconsDiv = modal.querySelector('.radio-form');
         if (task === 'add' || task === 'edit') {
             if (projectTitle.value === '') {
                 projectTitleError.classList.remove('hide');
             }
 
           // ADD PROJECT TO ARRAY AND DOM
-        } else if (task === 'add') {
+        } else if (task === 'add' && projectIconsDiv.classList.contains('show')) {
           projects.addProject(projectIcon.value, projectTitle.value);
 
-          // EDIT PROJECT FROM ARRAY
+          // EDIT A PROJECT FROM ARRAY
         } else if (task === 'edit') {
           projects.editProject(projectIcon.value, projectTitle.value, index);
 
-          // DELETE PROJECT FROM ARRAY
+          // DELETE A PROJECT FROM ARRAY
         } else if (task === 'delete') {
             projects.deleteProject(index);
         }
@@ -126,30 +128,44 @@ const dom = (() => {
     }
 
     function selectMenuLink(target) {
-        const taskLinks = document.querySelectorAll('.nav-link');
-        taskLinks.forEach((link) => {
+        const allMenuLinks = document.querySelectorAll('.link');
+        const addTaskButton = document.querySelector('.add-task');
+
+        // BY DEFAULT ADD TASK BUTTON IS HIDDEN
+        addTaskButton.classList.add('hide');
+
+        allMenuLinks.forEach((link) => {
             link.classList.remove('selected-link');
         });
 
-        // ADD BACKGROUND COLOR ON CLICKED NAVIGATION BAR LINK
-        // IF CLICKED DIRECTLY ON MENU OR PROJECT LINK
-        if (target.classList.contains('nav-link')) {
+        // IF CLICKED ON MENU LINK
+        if (target.classList.contains('menu-link')) {
             target.classList.add('selected-link');
         
         // IF CLICKED ON MENU LINK ICON OR TEXT
-        } else if (target.classList.contains('nav-link-icon')
-                || target.classList.contains('nav-link-text')) {
+        } else if (target.classList.contains('menu-link-icon')
+                || target.classList.contains('menu-link-text')) {
                 target.parentElement.classList.add('selected-link');
+
+        // IF CLICKED SOMEWHERE ON PROJECT LINK
+        } else if (target.classList.contains('project')) {
+        // SHOW BUTTON TO ADD A TASK
+        addTaskButton.classList.remove('hide');
+        }
+        
+        // IF CLICKED DIRECTLY ON PROJECT LINK
+        if (target.classList.contains('project-link')) {
+        target.classList.add('selected-link');
 
         // IF CLICKED ON PROJECT ICON OR TEXT
         } else if (target.classList.contains('project-icon')
-                || target.classList.contains('project-text')) {
-                target.parentElement.parentElement.classList.add('selected-link');
-        
-        // IF CLICKED ON PROJECT ELEMENTS DIVS        
+              || target.classList.contains('project-text')) {
+        target.parentElement.parentElement.classList.add('selected-link');
+
+        // IF CLICKED ON PROJECT ELEMENTS DIVS
         } else if (target.classList.contains('project-icon-and-text-div')
-                || target.classList.contains('project-default-icons-div')) {
-                target.parentElement.classList.add('selected-link');
+              || target.classList.contains('project-default-icons-div')) {
+        target.parentElement.classList.add('selected-link');
         }
     }
 
@@ -199,7 +215,7 @@ const dom = (() => {
           // PROJECT LINK
           projectLink.setAttribute('href', '#');
           projectLink.setAttribute('data-index', i);
-          projectLink.classList.add('nav-link', 'project-link', 'project', 'select');
+          projectLink.classList.add('menu-link', 'project-link', 'project', 'select');
 
           // PROJECT ICON
           projectIcon.classList.add('fa-solid', 'project-icon', projects.projectList[i].icon, 'fa-fw', 'project', 'select', 'padding-right');
@@ -232,18 +248,10 @@ const dom = (() => {
 
         //   MAIN CONTENT
       function showMainTitle(index) {
-        const allMenuIcons = document.querySelectorAll('.menu-icon');
-        console.log('allMenuIcons:', allMenuIcons.length);
-        console.log('Current index:', index);
-        
-
-        if (index < 0 || index >= allMenuIcons.length) {
-            console.error('Index out of bounds:', index);
-            return;
-        }
+        const allMenuIcons = document.querySelectorAll('.menu-link-icon');
         
         const menuIcon = allMenuIcons[index].getAttribute('data-icon');
-        const menuTexts = document.querySelectorAll('.menu-text');
+        const menuTexts = document.querySelectorAll('.menu-link-text');
         mainTitleIcon.classList.add('fa-solid', menuIcon, 'main-title-icon', 'fa-fw', 'padding-right');
         mainTitleText.textContent = menuTexts[index].textContent;
 
@@ -255,8 +263,8 @@ const dom = (() => {
 
         // TITLE OF TASKS FROM MENU
         if (target.classList.contains('menu-link') 
-        || target.classList.contains('menu-icon') 
-        || target.classList.contains('menu-text')) {
+        || target.classList.contains('menu-link-icon') 
+        || target.classList.contains('menu-link-text')) {
             showMainTitle(index);
         } else if (target.classList.contains('project-link') 
         || target.classList.contains('project-icon') 

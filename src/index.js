@@ -7,8 +7,6 @@ import projects from './projects';
 
 // ADD AND SHOW DEFAULT PROJECT (EXAMPLE)
 projects.addProject('fa-tools', 'Craft Example');
-projects.addProject('fa-volleyball', 'Sporty Stuff');
-projects.addProject('fa-gift', 'Surprise!');
 dom.showProjects();
 
 

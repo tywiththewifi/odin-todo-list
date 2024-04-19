@@ -148,7 +148,7 @@ transform: rotate(-45deg);
     vertical-align: middle;
 }
 
-.nav-link {
+.menu-link, .project-link {
     display: flex;
     margin: 20px;
     margin-bottom: 20px;
@@ -162,7 +162,7 @@ transform: rotate(-45deg);
     transition: .3s;
 }
 
-.nav-link p {
+.menu-link p, .project-link p {
     padding-left: 3px;
 }
 
@@ -180,7 +180,7 @@ transform: rotate(-45deg);
     background-color: var(--green);
 }
 
-.nav-link:not(.selected-link):hover {
+.menu-link:not(.selected-link):hover, .project-link:not(.selected-link):hover {
     border: 1px solid var(--light-green);
     transition: .3s;
 }
@@ -294,7 +294,6 @@ transform: rotate(-45deg);
 /* TOOLTIP */
 .tooltip-icon {
     position: relative;
-    display: inline-block;
 }
 
 .tooltip-icon .tooltip-text {
@@ -413,7 +412,7 @@ transform: rotate(-45deg);
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin-top: 40px;
+    margin-top: 40;
     padding-top: 20px;
     border-top: 1px solid var(--grey);
 }
