@@ -402,7 +402,7 @@ transform: rotate(-45deg);
     color: var(--red);
 }
 
-.todo-title-error {
+.modal-title-error {
     margin: -15px 0 20px 0;
     font-size: 13px;
     color: var(--red);
@@ -449,7 +449,7 @@ transform: rotate(-45deg);
 .deletion-modal-header {
     background: linear-gradient(90deg, var(--dark-red) 0%, var(--red) 100%);
   }
-  .todo-title {
+  .modal-title {
     font-weight: 900;
   }
   .cancel-deletion:hover {
