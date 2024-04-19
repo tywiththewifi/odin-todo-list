@@ -216,68 +216,74 @@ const dom = (() => {
     }
 
     // TASKS
-    function showTasks(index, title, date, priority) {
+    function showTasks(index) {
         const tasksList = document.querySelector('.tasks-list');
-        const taskDiv = document.createElement('div');
-        const taskIconAndTextDiv = document.createElement('div');
-        const taskIcon = document.createElement('i');
-        const taskText = document.createElement('p');
-        const taskInfo = document.createElement('div');
-        const taskDueDate = document.createElement('p');
-        const taskEditIcon = document.createElement('i');
-        const taskTrashIcon = document.createElement('i');
-        const taskInfoIcon = document.createElement('i');
+       
 
         // SHOW TASKS COUNT
         tasksCount.textContent = projects.projectList[index].tasks.length;
+        tasksList.textContent = '';
 
-        // TASK DIV
-        taskDiv.classList.add('task-div', 'hover-element');
+        for (let i = 0; i < projects.projectList[index].tasks.length; i++) {
+            const taskDiv = document.createElement('div');
+            const taskIconAndTextDiv = document.createElement('div');
+            const taskIcon = document.createElement('i');
+            const taskText = document.createElement('p');
+            const taskInfo = document.createElement('div');
+            const taskDueDate = document.createElement('p');
+            const taskEditIcon = document.createElement('i');
+            const taskTrashIcon = document.createElement('i');
+            const taskInfoIcon = document.createElement('i');
+        
 
-        // TASK ICON, TEXT AND ITS DIV
-        taskIconAndTextDiv.classList.add('flex');
+            // TASK DIV
+            taskDiv.classList.add('task-div', 'hover-element');
 
-        if (priority === 'low') {
-            taskIcon.classList.add('fa-solid', 'fa-circle', 'low-priority', 'padding-right');
-          } else if (priority === 'medium') {
-            taskIcon.classList.add('fa-solid', 'fa-circle', 'mid-priority', 'padding-right');
-          } else if (priority === 'high') {
-            taskIcon.classList.add('fa-solid', 'fa-circle', 'high-priority', 'padding-right');
-          } else {
-            taskIcon.classList.add('fa-solid', 'fa-circle', 'padding-right');
-          }
+            // TASK ICON, TEXT AND ITS DIV
+            taskIconAndTextDiv.classList.add('flex');
 
-        taskText.classList.add('task-text');
-        taskText.textContent = title;
+            if (projects.projectList[index].tasks[i].priority === 'low') {
+                taskIcon.classList.add('fa-solid', 'fa-circle', 'low-priority', 'padding-right');
+            } else if (projects.projectList[index].tasks[i].priority === 'medium') {
+                taskIcon.classList.add('fa-solid', 'fa-circle', 'mid-priority', 'padding-right');
+            } else if (projects.projectList[index].tasks[i].priority === 'high') {
+                taskIcon.classList.add('fa-solid', 'fa-circle', 'high-priority', 'padding-right');
+            } else {
+                taskIcon.classList.add('fa-solid', 'fa-circle', 'padding-right');
+            }
 
-        // TASK INFO DIV
-        taskInfo.classList.add('flex');
+            taskText.classList.add('task-text');
+            taskText.textContent = projects.projectList[index].tasks[i].title;
 
-        // TASKS DUE DATE
-        taskDueDate.classList.add('due-date', 'padding-right');
-        if (date !== undefined) {
-            taskDueDate.textContent = date;
-          } else {
-            taskDueDate.textContent = '';
-          }
+            // TASK INFO DIV
+            taskInfo.classList.add('flex');
 
-        // TASK DEFAULT ICONS
-        taskEditIcon.classList.add('fa-solid', 'fa-edit', 'scale-element', 'padding-right');
-        taskTrashIcon.classList.add('fa-solid', 'fa-trash-alt', 'scale-element', 'padding-right');
-        taskInfoIcon.classList.add('fa-solid', 'scale-element', 'fa-info-circle');
+            // TASKS DUE DATE
+            taskDueDate.classList.add('due-date', 'padding-right');
+            if (projects.projectList[index].tasks[i].date !== undefined) {
+                taskDueDate.textContent = projects.projectList[index].tasks[i].date;
+            } else {
+                taskDueDate.textContent = '';
+            }
 
-        // APPENDS
-        taskIconAndTextDiv.appendChild(taskIcon);
-        taskIconAndTextDiv.appendChild(taskText);
-        taskInfo.appendChild(taskDueDate);
-        taskInfo.appendChild(taskEditIcon);
-        taskInfo.appendChild(taskTrashIcon);
-        taskInfo.appendChild(taskInfoIcon);
-        taskDiv.appendChild(taskIconAndTextDiv);
-        taskDiv.appendChild(taskInfo);
-        tasksList.appendChild(taskDiv);
+            // TASK DEFAULT ICONS
+            taskEditIcon.classList.add('fa-solid', 'fa-edit', 'scale-element', 'padding-right');
+            taskTrashIcon.classList.add('fa-solid', 'fa-trash-alt', 'scale-element', 'padding-right');
+            taskInfoIcon.classList.add('fa-solid', 'scale-element', 'fa-info-circle');
 
-        manipulateModal('close');
+            // APPENDS
+            taskIconAndTextDiv.appendChild(taskIcon);
+            taskIconAndTextDiv.appendChild(taskText);
+            taskInfo.appendChild(taskDueDate);
+            taskInfo.appendChild(taskEditIcon);
+            taskInfo.appendChild(taskTrashIcon);
+            taskInfo.appendChild(taskInfoIcon);
+            taskDiv.appendChild(taskIconAndTextDiv);
+            taskDiv.appendChild(taskInfo);
+            tasksList.appendChild(taskDiv);
+
+            manipulateModal('close');
+        }
 
     }
 
@@ -311,7 +317,7 @@ const dom = (() => {
           // PROJECT LINK
           projectLink.setAttribute('href', '#');
           projectLink.setAttribute('data-index', i);
-          projectLink.classList.add('menu-link', 'project-link', 'project', 'select');
+          projectLink.classList.add('menu-link', 'project-link', 'project', 'select', 'link');
 
           // PROJECT ICON
           projectIcon.classList.add('fa-solid', 'project-icon', projects.projectList[i].icon, 'fa-fw', 'project', 'select', 'padding-right');
@@ -323,9 +329,9 @@ const dom = (() => {
           projectText.setAttribute('data-index', i);
 
         // PROJECT DEFAULT ICONS
-          projectEditIcon.classList.add('fa-regular', 'fa-pen-to-square', 'edit-project', 'scale-element', 'padding-right', 'edit-project');
+          projectEditIcon.classList.add('fa-regular', 'fa-pen-to-square', 'edit-project', 'project', 'scale-element', 'padding-right', 'edit-project');
           projectEditIcon.setAttribute('data-index', i)
-          projectTrashIcon.classList.add('fa-regular', 'fa-trash-can', 'scale-element', 'delete-project');
+          projectTrashIcon.classList.add('fa-regular', 'fa-trash-can', 'project', 'scale-element', 'delete-project');
           projectTrashIcon.setAttribute('data-index', i);
 
           // APPENDS

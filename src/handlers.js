@@ -34,7 +34,7 @@ const handlers = (() => {
 
             // STYLE MENU LINK
             } else if (target.classList.contains('select')) {
-                index = target.getAttribute('data-index');
+                index = parseInt(target.getAttribute('data-index'), 10);
                 dom.selectMenuLink(target, index);
                 dom.changeMainTitle(target, index);
             
@@ -44,15 +44,15 @@ const handlers = (() => {
 
             // MODAL TO EDIT A PROJECT
             } else if (target.classList.contains('edit-project')) {
-                index = target.getAttribute('data-index');
-                dom.selectMenuLink(target);
+                index = parseInt(target.getAttribute('data-index'), 10);
+                dom.selectMenuLink(target, index);
                 dom.manipulateModal('show', 'Edit Project', 'Edit', index);
                 dom.editProject(index);
 
             // MODAL TO DELETE A PROJECT
             } else if (target.classList.contains('delete-project')) {
-                index = target.getAttribute('data-index');
-                dom.selectMenuLink(target);
+                index = parseInt(target.getAttribute('data-index'), 10);
+                dom.selectMenuLink(target, index);
                 dom.manipulateModal('show', 'Delete Project', 'Delete', index);
 
             // MODAL TO ADD A TASK
@@ -61,13 +61,16 @@ const handlers = (() => {
 
             // VALIDATE MODAL INFO
             } else if (target.classList.contains('confirm-modal')) {
-                dom.validateModal();
+                const selectedProject = document.querySelector('.selected-link');
+
                 if (target.textContent === 'Add') {
                     dom.validateModal('add');
                 } else if (target.textContent === 'Edit') {
-                dom.validateModal('edit', index);
+                    index = parseInt(selectedProject.getAttribute('data-index'), 10);
+                    dom.validateModal('edit', index);
                 } else if (target.textContent === 'Delete') {
-                dom.validateModal('delete', index);
+                    index = parseInt(selectedProject.getAttribute('data-index'), 10);
+                    dom.validateModal('delete', index);
                 }
 
             // CLOSE MODAL

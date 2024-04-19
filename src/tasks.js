@@ -15,7 +15,7 @@ const tasks = (() => {
     function addTask(index, title, description, date, priority) {
         const task = new Task(title, description, date, priority);
         projects.projectList[index].tasks.push(task);
-        dom.showTasks(index, title, description, date, priority);
+        dom.showTasks(index);
     }
 
     return {
