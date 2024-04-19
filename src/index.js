@@ -11,7 +11,7 @@ projects.addProject('fa-tools', 'Craft Example');
 dom.showProjects();
 
 // ADD EXMAPLE TASK
-tasks.addTask(0, 'Show Task Demo');
+tasks.addTask(0, 'Show Task Demo', 'Short description of my task', '2024-11-11', 'low');
 
 
 // SHOW DEFAULT CONTENT
