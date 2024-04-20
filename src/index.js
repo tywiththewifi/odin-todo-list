@@ -11,9 +11,15 @@ projects.addProject('fa-tools', 'Craft Example');
 dom.showProjects();
 
 // ADD EXMAPLE TASK
-tasks.addTask(0, 'Show Task Demo', 'Longer description of my demo task, just to show this amazingly nice scrollbar ... ฅ(^◉ᴥ◉^)ฅ ...', '2011-11-11', 'low');
+tasks.addTask(
+    0, 
+    'Show Task Demo', 
+    'Longer description of my demo task, just to show this amazingly nice scrollbar ... ฅ(^◉ᴥ◉^)ฅ ...', 
+    '2011-11-11', 
+    'low'
+);
 
-// SHOW DEFAULT CONTENT
+// BY DEFAULT SHOW TITLE FROM MENU LINK 'ALL'
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM fully loaded');
     dom.showProjects();

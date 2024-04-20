@@ -170,7 +170,7 @@ transform: rotate(-45deg);
     vertical-align: middle;
 }
 
-.menu-link, .project-link {
+.link, .project-link {
     display: flex;
     margin: 20px;
     margin-bottom: 20px;
@@ -184,7 +184,7 @@ transform: rotate(-45deg);
     transition: .3s;
 }
 
-.menu-link p, .project-link p {
+.link p, .project-link p {
     padding-left: 3px;
 }
 
@@ -204,7 +204,7 @@ transform: rotate(-45deg);
     background-color: var(--green);
 }
 
-.menu-link:not(.selected-link):hover, .project-link:not(.selected-link):hover {
+.link:not(.selected-link):hover, .project-link:not(.selected-link):hover {
     border: 1px solid var(--light-green);
     transition: .3s;
 }
