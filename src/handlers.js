@@ -17,6 +17,8 @@ const handlers = (() => {
 
             const { target } = event;
 
+            index = parseInt(target.getAttribute('data-index'), 10);
+
             if (event.target.matches('.select')) {
                 let index = event.target.getAttribute('data-index');
                 console.log('Clicked on .select, index set to:', index, 'Event target:', event.target);
@@ -36,22 +38,19 @@ const handlers = (() => {
 
             // STYLE CLICKED LINK
             } else if (target.classList.contains('select')) {
-                dom.selectMenuLink(target);
+                dom.selectLink(target, index);
 
-                // IN THE MAIN CONTENT SHOW LINK TITLE ACCORDINGLY
-                index = parseInt(target.getAttribute('data-index'), 10);
+                // IN THE MAIN CONTENT SHOW MENU TITLE ACCORDINGLY
                 dom.changeMainTitle(target, index);
             }
 
             // MODAL TO EDIT A PROJECT
             if (target.classList.contains('edit-project')) {
-                index = parseInt(target.getAttribute('data-index'), 10);
                 dom.manipulateModal('show', 'Edit Project', 'Edit', index);
                 dom.editProject(index);
 
             // MODAL TO DELETE A PROJECT
             } else if (target.classList.contains('delete-project')) {
-                index = parseInt(target.getAttribute('data-index'), 10);
                 dom.manipulateModal('show', 'Delete Project', 'Delete', index);
             }
 
@@ -95,6 +94,8 @@ const handlers = (() => {
                     // DELETE A PROJECT 
                     // IF DELETION TEXT IS SHOWN
                     if (!projectDeletionText.classList.contains('hide')) {
+
+                        // If deletion text is shown
                         const projectIndex = parseInt(selectedProject.getAttribute('data-index'), 10);
                         dom.validateModal('delete', projectIndex);
                     

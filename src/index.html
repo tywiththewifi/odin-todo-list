@@ -25,21 +25,21 @@
 
         <!-- MENU TASKS -->
         <div class="menu-links">
-            <a class="link menu-link select selected-link " data-index="0" href="#">
-                <i class="fa-solid fa-calendar-days menu-link-icon menu-icon select padding-right" data-index="0" data-icon="fa-calendar-days"></i>
-                <p class="menu-link-text menu-text select" data-index="0">All</p>
+            <a class="link menu-link select selected-link " data-index="0" data-title="all" href="#">
+                <i class="fa-solid fa-calendar-days menu-link-icon menu-icon select padding-right" data-index="0" data-title="all" data-icon="fa-calendar-days"></i>
+                <p class="menu-link-text menu-text select" data-index="0" data-title="all">All</p>
             </a>
-            <a href="#" class="link menu-link select" data-index="1">
-                <i class="fa-solid fa-calendar-day menu-link-icon menu-icon select padding-right" data-index="1" data-icon="fa-calendar-day"></i>
-                <p class="menu-link-text menu-text select" data-index="1">Today</p>
+            <a href="#" class="link menu-link select" data-index="1" data-title="today">
+                <i class="fa-solid fa-calendar-day menu-link-icon menu-icon select padding-right" data-index="1" data-title="today" data-icon="fa-calendar-day"></i>
+                <p class="menu-link-text menu-text select" data-index="1" data-title="today">Today</p>
             </a>
-            <a href="#" class="link menu-link select" data-index="2">
-                <i class="fa-solid fa-calendar-week menu-link-icon menu-icon select padding-right" data-index="2" data-icon="fa-calendar-week"></i>
-                <p class="menu-link-text menu-text select" data-index="2">Week</p>
+            <a href="#" class="link menu-link select" data-index="2" data-title="week">
+                <i class="fa-solid fa-calendar-week menu-link-icon menu-icon select padding-right" data-index="2" data-title="week" data-icon="fa-calendar-week"></i>
+                <p class="menu-link-text menu-text select" data-index="2" data-title="week">Week</p>
             </a>
-            <a href="#" class="link menu-link select" data-index="3">
-                <i class="fa-solid fa-star menu-link-icon menu-icon select padding-right" data-index="3" data-icon="fa-star"></i>
-                <p class="menu-link-text menu-text select" data-index="3">Important</p>
+            <a href="#" class="link menu-link select" data-index="3" data-title="important">
+                <i class="fa-solid fa-star menu-link-icon menu-icon select padding-right" data-index="3" data-title="important" data-icon="fa-star"></i>
+                <p class="menu-link-text menu-text select" data-index="3" data-title="important">Important</p>
             </a>
         </div>
 
@@ -243,9 +243,9 @@
                         <label for="priority">Priority</label>
                         <select name="priority" class="task-priority">
                             <option value="" disabled selected>How important is this task?</option>
-                            <option value="low">😴 It can wait a month...or two...</option>
-                            <option value="medium">😅 Somewhere between relax and focus</option>
-                            <option value="high">😤 Now or never!</option>
+                            <option value="low">😴 Not important at all...</option>
+                            <option value="medium">😅 A bit important</option>
+                            <option value="high">😤 Super important!</option>
                         </select>
                     </div>
                 </div>

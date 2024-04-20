@@ -13,6 +13,7 @@ const dom = (() => {
     const mainTitleIcon = document.querySelector('.main-title-icon');
     const mainTitleText = document.querySelector('.main-title-text');
     const tasksCount = document.querySelector('.tasks-count');
+    const tasksList = document.querySelector('.tasks-list');
 
     function responsiveMenu() {
         if (window.innerWidth <= 1000) {
@@ -59,11 +60,11 @@ const dom = (() => {
     
         // TASK PRIORITY
         if (projects.projectsList[projectIndex].tasks[taskIndex].priority === 'low') {
-          infoTaskPriority.textContent = 'LOW - It can wait for a month or two.. 😴';
+          infoTaskPriority.textContent = 'I can do it later or never at all... 😴';
         } else if (projects.projectsList[projectIndex].tasks[taskIndex].priority === 'medium') {
-          infoTaskPriority.textContent = 'MEDIUM - Somewhere between Relax & Focus 😅';
+          infoTaskPriority.textContent = 'Somewhere between Relax & Focus 😅';
         } else if (projects.projectsList[projectIndex].tasks[taskIndex].priority === 'high') {
-          infoTaskPriority.textContent = 'HIGH - Now or never! 😲';
+          infoTaskPriority.textContent = 'Now or never! 😲';
         } else {
           infoTaskPriority.textContent = '';
         }
@@ -178,7 +179,7 @@ const dom = (() => {
             const taskDescription = document.querySelector('.task-description').value;
             const taskDueDate = document.querySelector('#dueDate').value;
             const taskPrioritySelection = document.querySelector('.task-priority');
-            let taskPriority = '';
+            let taskPriority;
 
             // CHECK TASK PRIORITY
             if (taskPrioritySelection.value === 'low') {
@@ -213,8 +214,9 @@ const dom = (() => {
         }
     }
 
-    function selectMenuLink(target, index) {
+    function selectLink(target, index) {
         const allMenuLinks = document.querySelectorAll('.link');
+        const menuTitle = target.getAttribute('data-title');
         const addTaskButton = document.querySelector('.add-task');
 
         // BY DEFAULT ADD TASK BUTTON IS HIDDEN
@@ -238,6 +240,7 @@ const dom = (() => {
         
         // SHOW BUTTON TO ADD A TASK TO SELECTED PROJECT
         addTaskButton.classList.remove('hide');
+        showTasks('', index);
         }
         
         // IF CLICKED DIRECTLY ON PROJECT LINK
@@ -253,6 +256,15 @@ const dom = (() => {
         } else if (target.classList.contains('project-icon-and-text-div')
               || target.classList.contains('project-default-icons-div')) {
         target.parentElement.classList.add('selected-link');
+        }
+
+        // IF CLICKED SOMEWHERE ON MENU LINK
+        if (
+            target.classList.contains('menu-link') ||
+            target.classList.contains('menu-link-icon') ||
+            target.classList.contains('menu-link-text')
+        ) {
+            dom.showTasks(menuTitle);
         }
     }
 
@@ -273,55 +285,88 @@ const dom = (() => {
     }
 
     // TASKS
-    function showTasks(index) {
-        const tasksList = document.querySelector('.tasks-list');
+    function showTasks(menuTitle, index) {
+        let tasksNumber = 0;
+        let indexStart;
+        let indexEnd;
        
+    // IF CLICKED ON MENU LINK 'ALL'
+    if (menuTitle === 'all') {
+        indexStart = 0;
+        indexEnd = projects.projectList.length;
+  
+        // IF CLICKED ON MENU LINK 'TODAY'
+      } else if (menuTitle === 'today') {
+        tasksList.textContent = 'Tasks for today..';
+  
+        // IF CLICKED ON MENU LINK 'WEEK'
+      } else if (menuTitle === 'week') {
+        tasksList.textContent = 'Tasks of the week..';
+  
+        // IF CLICKED ON MENU LINK 'IMPORTANT'
+      } else if (menuTitle === 'important') {
+        tasksList.textContent = 'Important tasks..';
+  
+        // IF CLICKED ON PROJECT LINK
+      } else if (!Number.isNaN(index)) { // If number of index exists - project was clicked
+        indexStart = index;
+        indexEnd = index + 1;
+      }
+  
+      for (let i = indexStart; i < indexEnd; i += 1) {
+        for (let j = 0; j < projects.projectList[i].tasks.length; j += 1) {
+          const taskDiv = document.createElement('div');
+          const taskIconAndTextDiv = document.createElement('div');
+          const taskIcon = document.createElement('i');
+          const taskText = document.createElement('p');
+          const taskInfo = document.createElement('div');
+          const taskDueDate = document.createElement('p');
+          const taskEditIcon = document.createElement('i');
+          const taskTrashIcon = document.createElement('i');
+          const taskInfoIcon = document.createElement('i');
+  
+          // SHOW NUMBER OF TASKS
+          tasksNumber += 1;
+          tasksCount.textContent = tasksNumber;
+  
+          taskDiv.classList.add('task-div', 'hover-element');
+          taskDiv.setAttribute('data-index', i);
+  
+          // TASK PRIORITY, TEXT AND ITS DIV
+          taskIconAndTextDiv.classList.add('flex');
+  
+          if (projects.projectList[i].tasks[j].priority === 'low') {
+            taskIcon.classList.add(
+              'fal',
+              'fa-circle',
+              'low-priority',
+              'padding-right'
+            );
+          } else if (projects.projectsList[i].tasks[j].priority === 'medium') {
+            
+            taskIcon.classList.add('fa-solid', 'fa-circle', 'mid-priority', 'padding-right');
 
-        // SHOW TASKS COUNT
-        tasksCount.textContent = projects.projectList[index].tasks.length;
-        tasksList.textContent = '';
+          } else if (projects.projectList[i].tasks[j].priority === 'high') {
 
-        for (let i = 0; i < projects.projectList[index].tasks.length; i++) {
-            const taskDiv = document.createElement('div');
-            const taskIconAndTextDiv = document.createElement('div');
-            const taskIcon = document.createElement('i');
-            const taskText = document.createElement('p');
-            const taskInfo = document.createElement('div');
-            const taskDueDate = document.createElement('p');
-            const taskEditIcon = document.createElement('i');
-            const taskTrashIcon = document.createElement('i');
-            const taskInfoIcon = document.createElement('i');
-        
+            taskIcon.classList.add('fa-solid', 'fa-circle', 'high-priority', 'padding-right');
 
-            // TASK DIV
-            taskDiv.classList.add('task-div', 'hover-element');
+          } else {
+            taskIcon.classList.add('fa-solid', 'fa-circle', 'padding-right');
+          }
 
-            // TASK ICON, TEXT AND ITS DIV
-            taskIconAndTextDiv.classList.add('flex');
+          taskText.classList.add('task-text');
+          taskText.textContent = projects.projectList[i].tasks[j].title;
 
-            if (projects.projectList[index].tasks[i].priority === 'low') {
-                taskIcon.classList.add('fa-solid', 'fa-circle', 'low-priority', 'padding-right');
-            } else if (projects.projectList[index].tasks[i].priority === 'medium') {
-                taskIcon.classList.add('fa-solid', 'fa-circle', 'mid-priority', 'padding-right');
-            } else if (projects.projectList[index].tasks[i].priority === 'high') {
-                taskIcon.classList.add('fa-solid', 'fa-circle', 'high-priority', 'padding-right');
-            } else {
-                taskIcon.classList.add('fa-solid', 'fa-circle', 'padding-right');
-            }
+        //   TASK INFO DIV
+        taskInfo.classList.add('flex');
 
-            taskText.classList.add('task-text');
-            taskText.textContent = projects.projectList[index].tasks[i].title;
-
-            // TASK INFO DIV
-            taskInfo.classList.add('flex');
-
-            // TASKS DUE DATE
-            taskDueDate.classList.add('due-date', 'padding-right');
-            if (projects.projectList[index].tasks[i].date !== undefined) {
-                taskDueDate.textContent = projects.projectList[index].tasks[i].date;
+        // TASKS DUE DATE
+        taskDueDate.classList.add('due-date', 'padding-right');
+            if (projects.projectList[i].tasks[j].date !== undefined) {
+                taskDueDate.textContent = projects.projectList[i].tasks[j].date;
             } else {
                 taskDueDate.textContent = '';
-            }
+        }
 
             // TASK DEFAULT ICONS
             taskEditIcon.classList.add('fa-solid', 'fa-edit', 'edit-task', 'scale-element', 'padding-right');
@@ -342,9 +387,10 @@ const dom = (() => {
             taskDiv.appendChild(taskInfo);
             tasksList.appendChild(taskDiv);
 
-            manipulateModal('close');
-        }
+            
+            }
 
+        }
     }
 
     function showProjects() {
@@ -447,7 +493,7 @@ const dom = (() => {
         manipulateModal,
         validateModal,
         toggleMenu,
-        selectMenuLink,
+        selectLink,
         editProject,
         showTasks,
         showProjects,
