@@ -42,11 +42,12 @@ const dom = (() => {
         }
     }
     
-    function manipulateModal(state, name, task, index) {
+    function manipulateModal(state, title, task, projectIndex, taskIndex) {
         const modalHeader = modal.querySelector('.modal-header');
         const modalMainTitle = modal.querySelector('.modal-main-title');
         const modalTask = modal.querySelector('.modal-task');
         const deletionText = modal.querySelector('.deletion-text');
+        const taskInfoDiv = modal.querySelector('.info-div');
         const confirmButton = modal.querySelector('.confirm-modal');
         const cancelButton = modal.querySelector('.cancel-modal');
 
@@ -54,11 +55,12 @@ const dom = (() => {
         const form = document.querySelector('#form');
         form.reset();
         form.classList.remove('hide');
+        taskInfoDiv.classList.add('hide');
 
         modalTitleError.classList.add('hide');
         deletionText.classList.add('hide');
         cancelButton.classList.remove('cancel-deletion');
-        confirmButton.classList.remove('confirm-deletion');
+        confirmButton.classList.remove('confirm-deletion', 'hide');
 
         if (state === 'show') {
             const modalIconsDiv = modal.querySelector('.radio-form');
@@ -77,22 +79,58 @@ const dom = (() => {
                 modalTasksDiv.classList.remove('hide');
             }
 
+            // IF MODAL IS FOR WATCHING TASK INFO
+      } else if (title === 'Task Info') {
+        const infoTaskTitle = document.querySelector('.info-task-title');
+        const infoTaskDescription = document.querySelector('.info-task-description');
+        const infoTaskDueDate = document.querySelector('.info-task-due-date');
+        const infoTaskPriority = document.querySelector('.info-task-priority');
+        const infoTaskProject = document.querySelector('.info-task-project');
+
+        form.classList.add('hide');
+        confirmButton.classList.add('hide');
+        taskInfoDiv.classList.remove('hide');
+
+        // TASK TITLE
+        infoTaskTitle.textContent = `${projects.projectsList[projectIndex].tasks[taskIndex].title}`;
+
+        // TASK DESCRIPTION
+        infoTaskDescription.textContent = `${projects.projectsList[projectIndex].tasks[taskIndex].description}`;
+
+        // TASK DUE DATE
+        infoTaskDueDate.textContent = `${projects.projectsList[projectIndex].tasks[taskIndex].date}`;
+
+        // TASK PRIORITY
+        if (projects.projectsList[projectIndex].tasks[taskIndex].priority === 'low') {
+          infoTaskPriority.textContent = 'LOW - It can wait for a month or two.. 😴';
+        } else if (projects.projectsList[projectIndex].tasks[taskIndex].priority === 'medium') {
+          infoTaskPriority.textContent = 'MEDIUM - Somewhere between Relax & Focus 😅';
+        } else if (projects.projectsList[projectIndex].tasks[taskIndex].priority === 'high') {
+          infoTaskPriority.textContent = 'HIGH - Now or never! 😲';
+        } else {
+          infoTaskPriority.textContent = '';
+        }
+
+        // TASK PROJECT
+        infoTaskProject.textContent = projects.projectsList[projectIndex].title;
+
         } else if (task === 'delete') {
             modalHeader.classList.add('deletion-modal-header');
             deletionText.classList.remove('hide');
-            deletionModalTitle.textContent = projects.projectList[index].title;
+            deletionModalTitle.textContent = projects.projectList[projectIndex].title;
             form.classList.add('hide');
             cancelButton.classList.add('cancel-deletion');
             confirmButton.classList.add('confirm-deletion');
         
+        // TO CLOSE THE MODAL
         } else if (state === 'close') {
             modal.classList.add('hide');
         }
     }
 
     function validateModal(task, index) {
-        const { projectFormIcon } = document.forms.form;
-        const { projectDomIcon } = projectFormIcon.value;
+        const projectFormIcon = document.forms['form'].projectFormIcon;
+        const projectDomIcon = projectFormIcon.value;
         const projectIconsDiv = modal.querySelector('.radio-form');
         const modalTitleText = modalTitle.value;
 
@@ -268,8 +306,11 @@ const dom = (() => {
 
             // TASK DEFAULT ICONS
             taskEditIcon.classList.add('fa-solid', 'fa-edit', 'scale-element', 'padding-right');
+            taskEditIcon.setAttribute('data-index', i);
             taskTrashIcon.classList.add('fa-solid', 'fa-trash-alt', 'scale-element', 'padding-right');
+            taskTrashIcon.setAttribute('data-index', i);
             taskInfoIcon.classList.add('fa-solid', 'scale-element', 'fa-info-circle');
+            taskInfoIcon.setAttribute('data-index', i);
 
             // APPENDS
             taskIconAndTextDiv.appendChild(taskIcon);
@@ -329,9 +370,9 @@ const dom = (() => {
           projectText.setAttribute('data-index', i);
 
         // PROJECT DEFAULT ICONS
-          projectEditIcon.classList.add('fa-regular', 'fa-pen-to-square', 'edit-project', 'project', 'scale-element', 'padding-right', 'edit-project');
+          projectEditIcon.classList.add('fa-regular', 'fa-pen-to-square', 'edit-project', 'project', 'scale-element', 'padding-right', 'project-icon', 'edit-project');
           projectEditIcon.setAttribute('data-index', i)
-          projectTrashIcon.classList.add('fa-regular', 'fa-trash-can', 'project', 'scale-element', 'delete-project');
+          projectTrashIcon.classList.add('fa-regular', 'fa-trash-can', 'project', 'project-icon', 'scale-element', 'delete-project');
           projectTrashIcon.setAttribute('data-index', i);
 
           // APPENDS

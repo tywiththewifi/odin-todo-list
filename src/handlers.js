@@ -59,6 +59,14 @@ const handlers = (() => {
             } else if (target.classList.contains('add-task')) {
                 dom.manipulateModal('show', 'Add Task', 'Add');
 
+              // MODAL TO WATCH TASK INFO
+            } else if (target.classList.contains('fa-info-circle')) {
+                const selectedProject = document.querySelector('.selected-link');
+                const taskIndex = parseInt(target.getAttribute('data-index'), 10);
+                const projectIndex = parseInt(selectedProject.getAttribute('data-index'), 10);
+
+                dom.manipulateModal('show', 'Task Info', '', projectIndex, taskIndex);
+
             // VALIDATE MODAL INFO
             } else if (target.classList.contains('confirm-modal')) {
                 const selectedProject = document.querySelector('.selected-link');
@@ -83,6 +91,7 @@ const handlers = (() => {
     return {
         resizeWindow,
         listenClicks,
+    
     };
 })();
 
