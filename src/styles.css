@@ -210,7 +210,7 @@ transform: rotate(-45deg);
 }
 
 /* TASKS */
-#tasks-div {
+.tasks-div {
     max-width: 1000px;
     margin: 0 auto;
     padding: 40px;

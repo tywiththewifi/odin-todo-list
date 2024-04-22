@@ -219,9 +219,6 @@ const dom = (() => {
         const menuTitle = target.getAttribute('data-title');
         const addTaskButton = document.querySelector('.add-task');
 
-        // BY DEFAULT ADD TASK BUTTON IS HIDDEN
-        addTaskButton.classList.add('hide');
-
         allMenuLinks.forEach((link) => {
             link.classList.remove('selected-link');
         });
@@ -240,7 +237,7 @@ const dom = (() => {
         
         // SHOW BUTTON TO ADD A TASK TO SELECTED PROJECT
         addTaskButton.classList.remove('hide');
-        showTasks('', index);
+        getTasks('', index);
         }
         
         // IF CLICKED DIRECTLY ON PROJECT LINK
@@ -264,7 +261,7 @@ const dom = (() => {
             target.classList.contains('menu-link-icon') ||
             target.classList.contains('menu-link-text')
         ) {
-            dom.showTasks(menuTitle);
+            dom.getTasks(menuTitle);
         }
     }
 
@@ -285,36 +282,31 @@ const dom = (() => {
     }
 
     // TASKS
-    function showTasks(menuTitle, index) {
+    function showTasks(menuTitle, projectIndexStart, projectIndexEnd) {
         let tasksNumber = 0;
-        let indexStart;
-        let indexEnd;
+        
+        tasksList.textContent = '';
        
-    // IF CLICKED ON MENU LINK 'ALL'
-    if (menuTitle === 'all') {
-        indexStart = 0;
-        indexEnd = projects.projectList.length;
-  
-        // IF CLICKED ON MENU LINK 'TODAY'
-      } else if (menuTitle === 'today') {
-        tasksList.textContent = 'Tasks for today..';
-  
-        // IF CLICKED ON MENU LINK 'WEEK'
-      } else if (menuTitle === 'week') {
-        tasksList.textContent = 'Tasks of the week..';
-  
-        // IF CLICKED ON MENU LINK 'IMPORTANT'
-      } else if (menuTitle === 'important') {
-        tasksList.textContent = 'Important tasks..';
-  
-        // IF CLICKED ON PROJECT LINK
-      } else if (!Number.isNaN(index)) { // If number of index exists - project was clicked
-        indexStart = index;
-        indexEnd = index + 1;
-      }
-  
-      for (let i = indexStart; i < indexEnd; i += 1) {
-        for (let j = 0; j < projects.projectList[i].tasks.length; j += 1) {
+        // GENERATE TASKS LIST
+        for (let i = projectIndexStart; i < projectIndexEnd; i++) {
+          for (let j = 0; j < projects.projectList[i].tasks.length; j++) {
+
+            // IF CLICKED ON MENU LINK 'IMPORTANT' - FILTER NOT IMPORTANT TASKS
+            if (menuTitle === 'important' && projects.projectList[i].tasks[j].priority !== 'high') {
+              continue; // if task isnt important skip it
+
+              // IF CLICKED ON MENU LINK 'TODAY'
+            } else if (menuTitle === 'today') {
+              console.log('tasks for today...') 
+            
+              // IF CLICKED ON MENU LINK 'WEEK'
+            } else if (menuTitle === 'week') {
+              console.log('tasks for this week...')
+            
+            }
+          }
+        }
+      
           const taskDiv = document.createElement('div');
           const taskIconAndTextDiv = document.createElement('div');
           const taskIcon = document.createElement('i');
@@ -337,12 +329,12 @@ const dom = (() => {
   
           if (projects.projectList[i].tasks[j].priority === 'low') {
             taskIcon.classList.add(
-              'fal',
+              'fa-solid',
               'fa-circle',
               'low-priority',
               'padding-right'
             );
-          } else if (projects.projectsList[i].tasks[j].priority === 'medium') {
+          } else if (projects.projectList[i].tasks[j].priority === 'medium') {
             
             taskIcon.classList.add('fa-solid', 'fa-circle', 'mid-priority', 'padding-right');
 
@@ -357,7 +349,7 @@ const dom = (() => {
           taskText.classList.add('task-text');
           taskText.textContent = projects.projectList[i].tasks[j].title;
 
-        //   TASK INFO DIV
+        // TASK INFO DIV
         taskInfo.classList.add('flex');
 
         // TASKS DUE DATE
@@ -388,10 +380,31 @@ const dom = (() => {
             tasksList.appendChild(taskDiv);
 
             
-            }
-
-        }
     }
+
+    function getTasks(menuTitle, index) {
+      let projectIndexStart;
+      let projectIndexEnd;
+
+      // IF CLICKED ON PROJECT LINK
+      if (menuTitle === '' && !Number.isNaN(index)) { // If number of index exists - project was clicked
+
+        projectIndexStart = index;
+        projectIndexEnd = index + 1;
+
+        // IF PROJECT DOESN'T HAVE ANY TASKS 
+        if (projects.projectList[index].tasks.length === 0) {
+          tasksCount.textContent = 0;
+        }
+
+        // IF CLICKED ON MENU LINK  
+      } else {
+        projectIndexStart = 0;
+        projectIndexEnd = projects.projectList.length;
+      }
+
+      showTasks(menuTitle, projectIndexStart, projectIndexEnd)
+    }    
 
     function showProjects() {
 
@@ -496,6 +509,7 @@ const dom = (() => {
         selectLink,
         editProject,
         showTasks,
+        getTasks,
         showProjects,
         showMainTitle,
         changeMainTitle,

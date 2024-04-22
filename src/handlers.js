@@ -82,12 +82,17 @@ const handlers = (() => {
             } else if (target.classList.contains('confirm-modal')) {
                 const selectedProject = document.querySelector('.selected-link');
 
+
+                // VALIDATE MODAL FOR ADDING
                 if (target.textContent === 'Add') {
                     dom.validateModal('add');
+
+                    // VALIDATE MODAL FOR EDITING
                 } else if (target.textContent === 'Edit') {
                     index = parseInt(selectedProject.getAttribute('data-index'), 10);
                     dom.validateModal('edit', index);
-                    // DELETION MODAL
+                    
+                    // VALIDATE MODAL FOR DELETING
                 } else if (target.textContent === 'Delete') {
                     const projectDeletionText = document.querySelector('.project-deletion-text');
 

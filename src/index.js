@@ -13,7 +13,7 @@ dom.showProjects();
 // ADD EXMAPLE TASK
 tasks.addTask(
     0, 
-    'Figure out this shit music industry', 
+    'Move things with my mind', 
     'Longer description of my demo task, just to show this amazingly nice scrollbar ... ฅ(^◉ᴥ◉^)ฅ ...', 
     '2011-11-11', 
     'low'
@@ -23,7 +23,7 @@ tasks.addTask(
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM fully loaded');
     dom.showProjects();
-    dom.showTasks('all');
+    dom.getTasks('all');
     dom.showMainTitle(0);
     dom.responsiveMenu();
     handlers.listenClicks();
