@@ -389,6 +389,7 @@ const dom = (() => {
     function showTasks(menuTitle, projectIndexStart, projectIndexEnd) {
         let tasksNumber = 0;
         
+        tasksCount.textContent = 0;
         tasksList.textContent = '';
        
         // GENERATE TASKS LIST
@@ -521,7 +522,6 @@ const dom = (() => {
         selectLink,
         editProject,
         showProjects,
-        showTasks,
         getTasks,
          
     };
