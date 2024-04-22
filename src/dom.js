@@ -142,6 +142,7 @@ const dom = (() => {
         taskDiv.setAttribute('data-index', i);
 
         // TASK PRIORITY, TEXT AND ITS DIV
+        taskDiv.classList.add('task-div', 'hover-element');
         taskIconAndTextDiv.classList.add('flex');
 
         if (projects.projectList[i].tasks[j].priority === 'low') {
@@ -179,11 +180,15 @@ const dom = (() => {
 
           // TASK DEFAULT ICONS
           taskEditIcon.classList.add('fa-solid', 'fa-edit', 'edit-task', 'scale-element', 'padding-right');
-          taskEditIcon.setAttribute('data-index', i);
+          taskEditIcon.setAttribute('data-project-index', i);
+          taskEditIcon.setAttribute('data-task-index', j);
           taskTrashIcon.classList.add('fa-solid', 'fa-trash-alt', 'scale-element', 'delete-task', 'padding-right');
-          taskTrashIcon.setAttribute('data-index', i);
+          taskTrashIcon.setAttribute('data-project-index', i);
+          taskTrashIcon.setAttribute('data-task-index', j);
           taskInfoIcon.classList.add('fa-solid', 'scale-element', 'fa-info-circle');
-          taskInfoIcon.setAttribute('data-index', i);
+          taskInfoIcon.setAttribute('data-project-index', i);
+          taskInfoIcon.setAttribute('data-task-index', j);
+
 
           // APPENDS
           taskIconAndTextDiv.appendChild(taskIcon);
@@ -284,13 +289,13 @@ const dom = (() => {
       const infoTaskProject = document.querySelector('.info-task-project');
   
       // TASK TITLE
-      infoTaskTitle.textContent = `${projects.projectsList[projectIndex].tasks[taskIndex].title}`;
+      infoTaskTitle.textContent = projects.projectsList[projectIndex].tasks[taskIndex].title;
   
       // TASK DESCRIPTION
-      infoTaskDescription.textContent = `${projects.projectsList[projectIndex].tasks[taskIndex].description}`;
+      infoTaskDescription.textContent = projects.projectsList[projectIndex].tasks[taskIndex].description;
   
       // TASK DUE DATE
-      infoTaskDueDate.textContent = `${projects.projectsList[projectIndex].tasks[taskIndex].date}`;
+      infoTaskDueDate.textContent = projects.projectsList[projectIndex].tasks[taskIndex].date;
   
       // TASK PRIORITY
       if (projects.projectsList[projectIndex].tasks[taskIndex].priority === 'low') {
@@ -307,7 +312,7 @@ const dom = (() => {
       infoTaskProject.textContent = projects.projectsList[projectIndex].title;
     }
 
-    function manipulateModal(state, title, task, projectIndex, taskIndex) {
+    function manipulateModal(state, title, modalTask, projectIndex, taskIndex) {
         const modalHeader = modal.querySelector('.modal-header');
         const modalMainTitle = modal.querySelector('.modal-main-title');
         const modalTaskButton = modal.querySelector('.modal-task-button');
@@ -333,8 +338,8 @@ const dom = (() => {
             const modalIconsDiv = modal.querySelector('.radio-form');
             const modalTasksDiv = modal.querySelector('.modal-tasks-div');
             modal.classList.remove('hide');
-            modalMainTitle.textContent = name;
-            modalTaskButton.textContent = task;
+            modalMainTitle.textContent = title;
+            modalTaskButton.textContent = modalTask;
 
             modalIconsDiv.classList.remove('hide');
             modalIconsDiv.classList.add('show');
@@ -355,7 +360,7 @@ const dom = (() => {
 
         watchTaskInfo(projectIndex, taskIndex);
 
-        } else if (task === 'delete') {
+        } else if (modalTask === 'delete') {
             modalHeader.classList.add('deletion-modal-header');
             form.classList.add('hide');
             cancelButton.classList.add('cancel-deletion');
@@ -382,32 +387,32 @@ const dom = (() => {
         }
     }
 
-    function validateModal(task, index) {
+    function validateModal(modalTask, index) {
         const projectFormIcon = document.forms['form'].projectFormIcon;
         const selectedLink = document.querySelector('.selected-link');
         const projectDomIcon = projectFormIcon.value;
         const projectIconsDiv = modal.querySelector('.radio-form');
         const modalTitleText = modalTitle.value;
 
-        if (task === 'add' || task === 'edit') {
+        if (modalTask === 'add' || modalTask === 'edit') {
             if (modalTitleText === '') {
                 modalTitleError.classList.remove('hide');
                 modalTitleError.classList.add('show');
             }
 
           // ADD PROJECT TO ARRAY AND DOM
-        } else if (task === 'add' && projectIconsDiv.classList.contains('show')) {
+        } else if (modalTask === 'add' && projectIconsDiv.classList.contains('show')) {
           projects.addProject(projectDomIcon, modalTitleText);
 
           // KEEP NEWLY ADDED PROJECT VISUALLY SELECTED IN DOM
           const lastProject = projectsLinksDiv.lastChild;
-          const lastProjectIndex = projectsLinksDiv.lastChild.getAttribute('data-index');
+          const lastProjectIndex = projectsLinksDiv.lastChild.getAttribute('data-link-index');
 
-          selectedLink(lastProject, lastProjectIndex);
+          selectLink(lastProject, lastProjectIndex);
           changeMainTitle(lastProject, lastProjectIndex);
 
           // EDIT A PROJECT FROM ARRAY
-        } else if (task === 'edit') {
+        } else if (modalTask === 'edit') {
           projects.editProject(projectDomIcon.value, modalTitleText, index);
 
           // KEEP PROJECT VISUALLY SELECTED IN DOM AFTER EDITING
@@ -419,14 +424,14 @@ const dom = (() => {
           changeMainTitle(selectedLink, index); // Change main title to icon and text of selected project
 
           // DELETE A PROJECT FROM ARRAY
-        } else if (task === 'delete') {
+        } else if (modalTask === 'delete') {
             const allTasksLink = document.querySelector('.link:first-child');
             projects.deleteProject(index);
             allTasksLink.classList.add('selected-link');
         
         // ADD A TASK TO ARRAY
-        } else if (task === 'add' && projectIconsDiv.classList.contains('hide')) {
-            const selectedProject = selectedLink.getAttribute('data-index');
+        } else if (modalTask === 'add' && projectIconsDiv.classList.contains('hide')) {
+            const selectedProject = selectedLink.getAttribute('data-link-index');
             const taskDescription = document.querySelector('.task-description').value;
             const taskDueDate = document.querySelector('#dueDate').value;
             const taskPrioritySelection = document.querySelector('.task-priority');
@@ -485,29 +490,29 @@ const dom = (() => {
       
         // PROJECT ICON/TEXT AND DEFAULT ICONS DIVS
       projectIconTextDiv.classList.add('project-icon-and-text-div', 'project', 'select');
-      projectIconTextDiv.setAttribute('data-index', i);
+      projectIconTextDiv.setAttribute('data-link-index', i);
       projectIconsDiv.classList.add('project-default-icons-div', 'project', 'select');
-      projectIconsDiv.setAttribute('data-index', i);
+      projectIconsDiv.setAttribute('data-link-index', i);
 
         // PROJECT LINK
         projectLink.setAttribute('href', '#');
-        projectLink.setAttribute('data-index', i);
+        projectLink.setAttribute('data-link-index', i);
         projectLink.classList.add('menu-link', 'project-link', 'project', 'select', 'link');
 
         // PROJECT ICON
         projectIcon.classList.add('fa-solid', 'project-icon', projects.projectList[i].icon, 'fa-fw', 'project', 'select', 'padding-right');
-        projectIcon.setAttribute('data-index', i);
+        projectIcon.setAttribute('data-link-index', i);
 
         // PROJECT TEXT
         projectText.classList.add('project-text', 'project', 'select');
         projectText.textContent = projects.projectList[i].title;
-        projectText.setAttribute('data-index', i);
+        projectText.setAttribute('data-link-index', i);
 
       // PROJECT DEFAULT ICONS
         projectEditIcon.classList.add('fa-regular', 'fa-pen-to-square', 'edit-project', 'project', 'scale-element', 'padding-right', 'project-icon', 'edit-project');
-        projectEditIcon.setAttribute('data-index', i)
+        projectEditIcon.setAttribute('data-link-index', i)
         projectTrashIcon.classList.add('fa-regular', 'fa-trash-can', 'project', 'project-icon', 'scale-element', 'delete-project');
-        projectTrashIcon.setAttribute('data-index', i);
+        projectTrashIcon.setAttribute('data-link-index', i);
 
         // APPENDS
         projectIconsDiv.appendChild(projectEditIcon);

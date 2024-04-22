@@ -1,20 +1,21 @@
-import dom from "./dom";
 import projects from "./projects";
 
 const tasks = (() => {
     class Task {
-        constructor(title, description, date, priority) {
+        constructor(title, description, date, priority, projectIndex, taskIndex) {
             this.title = title;
             this.description = description;
             this.date = date;
             this.priority = priority;
+            this.projectIndex = projectIndex;
+            this.taskIndex = taskIndex;
             
         }
     }
 
-    function addTask(index, title, description, date, priority) {
-        const task = new Task(title, description, date, priority);
-        projects.projectList[index].tasks.push(task);
+    function addTask(index, title, description, date, priority, projectIndex, taskIndex) {
+        const task = new Task(title, description, date, priority, projectIndex, taskIndex);
+        projects.projectList[projectIndex].tasks.push(task);
         console.log('Add a task!');
     }
 

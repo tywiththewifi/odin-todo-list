@@ -18,7 +18,9 @@ tasks.addTask(
     'Move things with my mind', 
     'Longer description of my demo task, just to show this amazingly nice scrollbar ... ฅ(^◉ᴥ◉^)ฅ ...', 
     '2011-11-11', 
-    'low'
+    'low',
+    0,
+    0
 );
 
 tasks.addTask(
@@ -26,7 +28,9 @@ tasks.addTask(
     'Move more things with my mind', 
     'Longer description of my demo task, just to show you this surprisingly nice scrollbar', 
     '2024-12-12', 
-    'high'
+    'high',
+    1,
+    0
 );
 
 // WHEN PAGE IS LOADED - SHOW TITLE FROM MENU LINK 'ALL'
