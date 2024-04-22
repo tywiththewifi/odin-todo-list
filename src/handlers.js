@@ -4,7 +4,6 @@ console.log('Handlers module loaded');
 
 
 const handlers = (() => {
-    let linkIndex = 0;
 
     // RESIZE MENU DEPENDING ON WINDOW SIZE
     function resizeWindow() {
@@ -18,7 +17,7 @@ const handlers = (() => {
             const { target } = event;
             const selectedLink = document.querySelector('.selected-link');
 
-            linkIndex = parseInt(target.getAttribute('data-link-index'), 10);
+            let linkIndex = parseInt(target.getAttribute('data-link-index'), 10);
 
             if (event.target.matches('.select')) {
                 let index = event.target.getAttribute('data-index');
@@ -43,7 +42,7 @@ const handlers = (() => {
                 dom.selectLink(target, linkIndex);
 
                 // IN THE MAIN CONTENT SHOW MENU TITLE ACCORDINGLY
-                dom.changeMainTitle(target, linkIndex);
+                dom.changeMainTitle(target, linkIndex); 
             }
 
             // MODAL TO EDIT A PROJECT
@@ -67,15 +66,16 @@ const handlers = (() => {
 
             // MODAL TO DELETE A TASK
             } else if (target.classList.contains('delete-task')) {
+                linkIndex = parseInt(target.getAttribute('data-project-index'), 10);
                 const taskIndex = parseInt(target.getAttribute('data-task-index'), 10);
-                dom.manipulateModal('show', 'Delete Task', 'Delete', 0, taskIndex);
+                dom.manipulateModal('show', 'Delete Task', 'Delete', linkIndex, taskIndex);
 
             // MODAL TO WATCH TASK INFO
             } else if (target.classList.contains('fa-info-circle')) {
                 const taskIndex = parseInt(target.getAttribute('data-task-index'), 10);
-                const projectIndex = parseInt(selectedLink.getAttribute('data-project-index'), 10);
+                linkIndex = parseInt(selectedLink.getAttribute('data-project-index'), 10);
 
-                dom.manipulateModal('show', 'Task Info', '', projectIndex, taskIndex);
+                dom.manipulateModal('show', 'Task Info', '', linkIndex, taskIndex);
 
             
 
@@ -86,12 +86,11 @@ const handlers = (() => {
 
                 // VALIDATE MODAL FOR ADDING
                 if (target.textContent === 'Add') {
-                    index = parseInt(selectedLink.getAttribute('data-index'), 10);
+                    index = parseInt(selectedLink.getAttribute('data-link-index'), 10);
                     dom.validateModal('add');
 
                 // VALIDATE MODAL FOR EDITING
                 } else if (target.textContent === 'Edit') {
-                    linkIndex = parseInt(selectedProject.getAttribute('data-index'), 10);
                     dom.validateModal('edit', linkIndex);
                     
                 // VALIDATE MODAL FOR DELETING
@@ -103,8 +102,7 @@ const handlers = (() => {
                     if (!projectDeletionText.classList.contains('hide')) {
 
                         // If deletion text is shown
-                        const projectIndex = parseInt(selectedLink.getAttribute('data-link-index'), 10);
-                        dom.validateModal('delete', projectIndex);
+                        dom.validateModal('delete', linkIndex);
                         dom.changeMainTitle(target, 0); // After deleting a project - change icon to 'fa-calendar-alt' (menu link 'all')
                         dom.showMainTitle(0); // After deleting a project - show main title as 'All'
                         dom.getTasks('all'); // After deleting a project - show all tasks from all remaining projects
