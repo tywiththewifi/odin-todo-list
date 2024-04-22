@@ -87,7 +87,6 @@ const handlers = (() => {
                 if (target.textContent === 'Add') {
                     index = parseInt(selectedLink.getAttribute('data-index'), 10);
                     dom.validateModal('add');
-                    target = selectedLink;
 
                     // VALIDATE MODAL FOR EDITING
                 } else if (target.textContent === 'Edit') {
