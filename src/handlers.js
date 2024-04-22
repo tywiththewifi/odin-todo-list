@@ -15,7 +15,8 @@ const handlers = (() => {
         document.addEventListener('click', (event) => {
             console.log('Click event triggered:', event.target);
 
-            const { target } = event;
+            const selectedLink = document.querySelector('.selected-link');
+            let { target } = event;
 
             index = parseInt(target.getAttribute('data-index'), 10);
 
@@ -70,9 +71,8 @@ const handlers = (() => {
 
             // MODAL TO WATCH TASK INFO
             } else if (target.classList.contains('fa-info-circle')) {
-                const selectedProject = document.querySelector('.selected-link');
                 const taskIndex = parseInt(target.getAttribute('data-index'), 10);
-                const projectIndex = parseInt(selectedProject.getAttribute('data-index'), 10);
+                const projectIndex = parseInt(selectedLink.getAttribute('data-index'), 10);
 
                 dom.manipulateModal('show', 'Task Info', '', projectIndex, taskIndex);
 
@@ -85,7 +85,9 @@ const handlers = (() => {
 
                 // VALIDATE MODAL FOR ADDING
                 if (target.textContent === 'Add') {
+                    index = parseInt(selectedLink.getAttribute('data-index'), 10);
                     dom.validateModal('add');
+                    target = selectedLink;
 
                     // VALIDATE MODAL FOR EDITING
                 } else if (target.textContent === 'Edit') {
@@ -101,8 +103,11 @@ const handlers = (() => {
                     if (!projectDeletionText.classList.contains('hide')) {
 
                         // If deletion text is shown
-                        const projectIndex = parseInt(selectedProject.getAttribute('data-index'), 10);
+                        const projectIndex = parseInt(selectedLink.getAttribute('data-index'), 10);
                         dom.validateModal('delete', projectIndex);
+                        dom.changeMainTitle(target, 0); // After deleting a project - change icon to 'fa-calendar-alt' (menu link 'all')
+                        dom.showMainTitle(0); // After deleting a project - show main title as 'All'
+                        dom.getTasks('all'); // After deleting a project - show all tasks from all remaining projects
                     
                     // DELETE A TASK
                     } else if (projectDeletionText.classList.contains('hide')) {

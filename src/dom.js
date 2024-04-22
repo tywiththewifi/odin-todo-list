@@ -170,7 +170,9 @@ const dom = (() => {
 
           // DELETE A PROJECT FROM ARRAY
         } else if (task === 'delete') {
+            const allTasksLink = document.querySelector('.link');
             projects.deleteProject(index);
+            allTasksLink.classList.add('selected-link');
         
         // ADD A TASK TO ARRAY
         } else if (task === 'add' && projectIconsDiv.classList.contains('hide')) {
