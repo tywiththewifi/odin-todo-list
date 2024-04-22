@@ -204,18 +204,18 @@ const dom = (() => {
           
   }
 
-  function getTasks(menuTitle, index) {
+  function getTasks(menuTitle, projectIndex) {
     let projectIndexStart;
     let projectIndexEnd;
 
     // IF CLICKED ON PROJECT LINK
-    if (menuTitle === '' && !Number.isNaN(index)) { // If number of index exists - project was clicked
+    if (menuTitle === '' && !Number.isNaN(projectIndex)) { // If number of index exists - project was clicked
 
-      projectIndexStart = index;
-      projectIndexEnd = index + 1;
+      projectIndexStart = projectIndex;
+      projectIndexEnd = projectIndex + 1;
 
       // IF PROJECT DOESN'T HAVE ANY TASKS 
-      if (projects.projectList[index].tasks.length === 0) {
+      if (projects.projectList[projectIndex].tasks.length === 0) {
         tasksCount.textContent = 0;
       }
 
@@ -228,7 +228,6 @@ const dom = (() => {
     showTasks(menuTitle, projectIndexStart, projectIndexEnd)
   } 
 
-  // LINK SELECTION
   function selectLink(target, index) {
     const allMenuLinks = document.querySelectorAll('.link');
     const menuTitle = target.getAttribute('data-title');
@@ -387,12 +386,13 @@ const dom = (() => {
         }
     }
 
-    function validateModal(modalTask, projectIndex) {
+    function validateModal(modalTask, projectIndex, taskIndex) {
         const projectFormIcon = document.forms['form'].projectFormIcon;
         const selectedLink = document.querySelector('.selected-link');
         const projectDomIcon = projectFormIcon.value;
         const projectIconsDiv = modal.querySelector('.radio-form');
         const modalTitleText = modalTitle.value;
+        const projectDeletionText = document.querySelector('.project-deletion-text');
 
         if (modalTask === 'add' || modalTask === 'edit') {
             if (modalTitleText === '') {
@@ -413,21 +413,25 @@ const dom = (() => {
 
           // EDIT A PROJECT FROM ARRAY
         } else if (modalTask === 'edit') {
-          projects.editProject(projectDomIcon.value, modalTitleText, projectIndex);
-
-          // KEEP PROJECT VISUALLY SELECTED IN DOM AFTER EDITING
+          
           const allProjectsLinks = document.querySelectorAll('.project-link');
           allProjectsLinks[index].classList.add('selected-link');
           const editedProject = allProjectsLinks[projectIndex];
 
+          projects.editProject(projectDomIcon, modalTitleText, projectIndex);
           selectLink(editedProject, projectIndex);
           changeMainTitle(selectedLink, projectIndex); // Change main title to icon and text of selected project
 
           // DELETE A PROJECT FROM ARRAY
-        } else if (modalTask === 'delete') {
+        } else if (modalTask === 'delete' && !projectDeletionText.classList.contains('hide')) {
             const allTasksLink = document.querySelector('.link:first-child');
             projects.deleteProject(projectIndex);
             allTasksLink.classList.add('selected-link');
+
+          // DELETE A TASK FROM ARRAY
+        } else if (modalTask === 'delete' && projectDeletionText.classList.contains('hide')) {
+          tasks.deleteTask(projectIndex, taskIndex);
+        
         
         // ADD A TASK TO ARRAY
         } else if (modalTask === 'add' && projectIconsDiv.classList.contains('hide')) {
@@ -452,13 +456,12 @@ const dom = (() => {
         }
       }
 
-    // PROJECTS
     function editProject(projectIndex) {
-        const projectIcon = projects.projectList[index].icon;
+        const projectIcon = projects.projectList[projectIndex].icon;
         const allProjectIcons = modal.querySelectorAll('.icon');
 
         //  SHOW EDITABLE PROJECT TITLE
-        modalTitle.value = projects.projectList[index].title;
+        modalTitle.value = projects.projectList[projectIndex].title;
 
         // SELECT EDITABLE PROJECT ICON
         for (let i=0; i<allProjectIcons.length; i++) {

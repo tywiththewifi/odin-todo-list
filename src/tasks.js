@@ -19,8 +19,17 @@ const tasks = (() => {
         console.log('Add a task!');
     }
 
+    function deleteTask(projectIndex, taskIndex) {
+        if (projectIndex > -1) {
+            projects.projectList[projectIndex].tasks.splice(taskIndex, 1);
+            dom.showTasks('', projectIndex, projects.projectList.length);
+            dom.getTasks('all');
+        }
+    }
+
     return {
         addTask,
+        deleteTask,
     };
 })();
 
