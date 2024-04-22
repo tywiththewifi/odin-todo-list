@@ -596,8 +596,16 @@ transform: rotate(-45deg);
 @media (max-width: 1500px) {
 
     .task-text {
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 1200px) {
+
+    .task-text {
         max-width: 400px;
     }
+
 }
 
 @media (max-width: 1000px) {
@@ -607,7 +615,23 @@ transform: rotate(-45deg);
     }
 
     .task-text {
-        max-width: 160px;
+        max-width: 500px;
     }
   
 }
+
+@media (max-width: 800px) {
+
+    .task-text {
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .task-text {
+        max-width: 100px;
+    }
+    
+}
+
