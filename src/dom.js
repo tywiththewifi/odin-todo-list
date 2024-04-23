@@ -127,63 +127,70 @@ const dom = (() => {
           } else if (menuTitle === 'week') {
             console.log('tasks for this week...')
           
+          } else if (menuTitle === 'completed' && projects.projectList[i].tasks[j].completed !== true) {
+            continue;
           }
+
+          const taskDiv = document.createElement('div');
+          const taskIconAndTextDiv = document.createElement('div');
+          const taskIcon = document.createElement('i');
+          const taskText = document.createElement('p');
+          const taskInfo = document.createElement('div');
+          const taskDate = document.createElement('p');
+          const taskEditIcon = document.createElement('i');
+          const taskTrashIcon = document.createElement('i');
+          const taskInfoIcon = document.createElement('i');
+
+           // SHOW NUMBER OF TASKS
+          tasksNumber += 1;
+          tasksCount.textContent = tasksNumber;
+
+          taskDiv.classList.add('task-div', 'hover-element');
+          taskDiv.setAttribute('data-index', i);
+
+          // TASK PRIORITY, TEXT AND ITS DIV
+          taskDiv.classList.add('task-div', 'hover-element');
+          taskIconAndTextDiv.classList.add('flex');
+
+
         }
       }
-    
-        const taskDiv = document.createElement('div');
-        const taskIconAndTextDiv = document.createElement('div');
-        const taskIcon = document.createElement('i');
-        const taskText = document.createElement('p');
-        const taskInfo = document.createElement('div');
-        const taskDate = document.createElement('p');
-        const taskEditIcon = document.createElement('i');
-        const taskTrashIcon = document.createElement('i');
-        const taskInfoIcon = document.createElement('i');
 
-        // SHOW NUMBER OF TASKS
-        tasksNumber += 1;
-        tasksCount.textContent = tasksNumber;
-
-        taskDiv.classList.add('task-div', 'hover-element');
-        taskDiv.setAttribute('data-index', i);
-
-        // TASK PRIORITY, TEXT AND ITS DIV
-        taskDiv.classList.add('task-div', 'hover-element');
-        taskIconAndTextDiv.classList.add('flex');
+        
+        
 
         if (projects.projectList[i].tasks[j].priority === 'low') {
-          taskIcon.classList.add(
-            'fa-solid',
-            'fa-circle',
-            'low-priority',
-            'padding-right'
-          );
+          taskIcon.classList.add('low-priority');
         } else if (projects.projectList[i].tasks[j].priority === 'medium') {
           
-          taskIcon.classList.add('fa-solid', 'fa-circle', 'mid-priority', 'padding-right');
+          taskIcon.classList.add('mid-priority');
 
         } else if (projects.projectList[i].tasks[j].priority === 'high') {
 
-          taskIcon.classList.add('fa-solid', 'fa-circle', 'high-priority', 'padding-right');
+          taskIcon.classList.add('high-priority');
 
         } else {
-          taskIcon.classList.add('fa-solid', 'fa-circle', 'padding-right');
+
+          taskIcon.classList.add('fa-solid', 'padding-right');
         }
+        taskIcon.setAttribute('data-project-index', i);
+        taskIcon.setAttribute('data-task-index', j);
 
         taskText.classList.add('task-text');
         taskText.textContent = projects.projectList[i].tasks[j].title;
+        taskText.setAttribute('data-project-index', i);
+        taskText.setAttribute('data-task-index', j);
 
-      // TASK INFO DIV
-      taskInfo.classList.add('flex');
+        // TASK INFO DIV
+        taskInfo.classList.add('flex');
 
-      // TASKS DUE DATE
-      taskDate.classList.add('due-date', 'padding-right');
-          if (projects.projectList[i].tasks[j].date !== undefined) {
-              taskDate.textContent = projects.projectList[i].tasks[j].date;
-          } else {
-              taskDate.textContent = '';
-      }
+        // TASKS DUE DATE
+        taskDate.classList.add('due-date', 'padding-right');
+            if (projects.projectList[i].tasks[j].date !== undefined) {
+                taskDate.textContent = projects.projectList[i].tasks[j].date;
+            } else {
+                taskDate.textContent = '';
+        }
 
           // TASK DEFAULT ICONS
           taskEditIcon.classList.add('fa-solid', 'fa-edit', 'edit-task', 'task-icon', 'scale-element', 'padding-right');
@@ -208,7 +215,15 @@ const dom = (() => {
           taskDiv.appendChild(taskInfo);
           tasksList.appendChild(taskDiv);
 
-          
+          // TASK COMPLETION
+          if (projects.projectList[i].tasks[j].completed === false) {
+            taskText.classList.remove('task-done-text');
+            taskIcon.classList.add('fa-solid', 'fa-circle', 'padding-right');
+          } else {
+            taskText.classList.add('task-done-text');
+            taskIcon.classList.add('fa-solid', 'fa-check-circle', 'padding-right');
+          }
+        manipulateModal('close');
   }
 
   function getTasks(menuTitle, projectIndex) {

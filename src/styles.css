@@ -91,6 +91,10 @@ input:focus, button:focus, textarea:focus, select:focus {
     color: var(--red);
 }
 
+.task-done-text {
+    text-decoration-line: line-through;
+}
+
 /* HEADER */
 #header {
     display: flex;
@@ -632,6 +636,6 @@ transform: rotate(-45deg);
     .task-text {
         max-width: 100px;
     }
-    
+
 }
 

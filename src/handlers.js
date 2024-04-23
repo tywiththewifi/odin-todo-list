@@ -1,4 +1,5 @@
 import dom from './dom';
+import tasks from './tasks';
 
 console.log('Handlers module loaded');
 
@@ -140,6 +141,16 @@ const handlers = (() => {
                 if (target.classList.contains('close')) {
                     dom.manipulateModal('close');
                 }
+
+                // MARK TASK AS COMPLETED
+                if (target.classList.contains('task-div') ||
+                    target.classList.contains('fa-circle') ||
+                    target.classList.contains('fa-check-circle') ||
+                    target.classList.contains('task-text')) {
+                        projectIndex = parseInt(target.getAttribute('data-project-index'), 10);
+                        taskIndex = parseInt(target.getAttribute('data-task-index'), 10);
+                        tasks.toggleTaskCompletion(projectIndex, taskIndex, selectedLink);
+                    }
             
             
         });
