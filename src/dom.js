@@ -75,6 +75,7 @@ const dom = (() => {
       
       mainTitleIcon.classList.add('fa-solid', menuIcon, 'main-title-icon', 'fa-fw', 'padding-right');
       mainTitleText.textContent = menuTexts[index].textContent;
+      document.title = `ToDo - ${mainTitleText.textContent}`;
 
     }
   
@@ -98,6 +99,7 @@ const dom = (() => {
           const projectIcon = projects.projectList[index].icon;
           mainTitleIcon.classList.add('fa-solid', projectIcon, 'main-title-icon', 'fa-fw', 'padding-right');
           mainTitleText.textContent = projects.projectList[index].title;
+          document.title = `Todo - ${mainTitleText.textContent}`;
       }
     }
 
