@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import { format, parseISO, differenceInDays } from 'date-fns';
 import projects from './projects';
 import tasks from './tasks';
 
@@ -106,7 +107,8 @@ const dom = (() => {
 
     // TASKS
     function showTasks(menuTitle, projectIndexStart, projectIndexEnd) {
-          
+      
+      const todayDate = format(new Date(), 'yyyy-MM-dd');
       let tasksNumber = 0;
       
       tasksCount.textContent = 0;
@@ -123,7 +125,6 @@ const dom = (() => {
             // IF CLICKED ON MENU LINK 'TODAY'
           } else if (menuTitle === 'today') {
             console.log('tasks for today...') 
-            const todayDate = format(new Date(), 'yyyy-MM-dd');
 
             if (projects.projectList[i].tasks[j].date !== todayDate) {
               continue;
@@ -132,7 +133,14 @@ const dom = (() => {
             // IF CLICKED ON MENU LINK 'WEEK'
           } else if (menuTitle === 'week') {
             console.log('tasks for this week...')
+            const dateOfToday = parseISO(todayDate);
+            const dateOfTask = parseISO(projects.projectList[i].tasks[j].date)
+
+            if (!(differenceInDays(dateOfTask, dateOfToday) <= 7 && differenceInDays(dateOfTask, dateOfToday) >= 0)) {
+              continue;
+            }
           
+            // IF CLICKED ON MENU LINK 'COMPLETED'
           } else if (menuTitle === 'completed' && projects.projectList[i].tasks[j].completed !== true) {
             continue;
           }

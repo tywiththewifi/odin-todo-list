@@ -182,7 +182,7 @@ transform: rotate(-45deg);
 .link, .project-link {
     display: flex;
     margin: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     padding: 12px 20px;
     background-color: var(--white);
     font-size: 17px;
@@ -353,9 +353,7 @@ transform: rotate(-45deg);
 
 /* FOOTER */
 #footer {
-    margin-top: 80px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin: 20px 0 40px 0;
     text-align: center;
     border-top: 1px solid var(--dark-grey);
 }
