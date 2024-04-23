@@ -13,8 +13,7 @@ projects.addProject('fa-tools', 'Craft Another Project');
 dom.showProjects();
 
 // ADD EXMAPLE TASK
-tasks.addTask(
-    0, 
+tasks.addTask( 
     'Move things with my mind', 
     'Longer description of my demo task, just to show this amazingly nice scrollbar ... ฅ(^◉ᴥ◉^)ฅ ...', 
     '2011-11-11', 
@@ -23,10 +22,10 @@ tasks.addTask(
     0
 );
 
-tasks.addTask(
-    1, 
+tasks.addTask( 
     'Move more things with my mind', 
     'Longer description of my demo task, just to show you this surprisingly nice scrollbar', 
+    'Another longer description of my demo task, just to show you this surprisingly nice scrollbar and cute little birdie ϵ( ‘Θ’ )϶♪♫',
     '2024-12-12', 
     'high',
     1,
