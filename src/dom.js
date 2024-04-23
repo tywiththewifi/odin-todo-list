@@ -14,6 +14,7 @@ const dom = (() => {
     const mainTitleIcon = document.querySelector('.main-title-icon');
     const mainTitleText = document.querySelector('.main-title-text');
     const projectsLinksDiv = document.querySelector('.projects-links-div');
+    const addTaskButton = document.querySelector('.add-task');
     const tasksCount = document.querySelector('.tasks-count');
     const tasksList = document.querySelector('.tasks-list');
     const taskDescription = modal.querySelector('.task-description');
@@ -236,7 +237,6 @@ const dom = (() => {
     const allLinks = document.querySelectorAll('.link');
     const allProjectsLinks = document.querySelectorAll('.project-link');
     const menuTitle = target.getAttribute('data-title');
-    const addTaskButton = document.querySelector('.add-task');
 
     allLinks.forEach((link) => {
         link.classList.remove('selected-link');
@@ -426,93 +426,106 @@ const dom = (() => {
         const projectIconsDiv = modal.querySelector('.radio-form');
         const modalTitleText = modalTitle.value;
         const projectDeletionText = document.querySelector('.project-deletion-text');
-        let menuTitle = clickedLink.getAttribute('data-title');
+        const menuLinkAll = document.querySelector('.link:first-child');
 
-        // MODALS TO ADD AND EDIT PROJECTS AND TASKS
-        if (modalAction === 'add' || modalAction === 'edit') {
-            if (modalTitleText === '') {
-                modalTitleError.classList.remove('hide');
-                modalTitleError.classList.add('show');
-            
+        // CHECK FOR MODAL TITLE ERROR IF MODAL FORM IS SHOWN
+        if (!form.classList.contains('hide') && modalTitleText === '') {
+          modalTitleError.classList.remove('hide');
+          modalTitleError.classList.add('show');
 
-              // ADD PROJECT TO ARRAY AND DOM
-            } else if (modalAction === 'add' && projectIconsDiv.classList.contains('show')) {
-              projects.addProject(projectDomIcon, modalTitleText);
+        // ADD PROJECT TO ARRAY AND DOM
+        } else if (modalAction === 'add' && projectIconsDiv.classList.contains('show')) {
+          projects.addProject(projectDomIcon, modalTitleText);
 
-              // KEEP NEWLY ADDED PROJECT VISUALLY SELECTED IN DOM
-              const lastProject = projectsLinksDiv.lastChild;
-              const lastProjectIndex = projectsLinksDiv.lastChild.getAttribute('data-link-index');
+          // KEEP NEWLY ADDED PROJECT VISUALLY SELECTED
+          const lastProject = projectsLinksDiv.lastChild;
+          const lastProjectIndex = projectsLinksDiv.lastChild.getAttribute('data-link-index');
 
-              selectLink(lastProject, lastProjectIndex);
-              changeMainTitle(lastProject, lastProjectIndex);
+          selectLink(lastProject, lastProjectIndex);
+          changeMainTitle(lastProject, lastProjectIndex);
 
-              // EDIT A PROJECT FROM ARRAY
-            } else if (modalAction === 'edit' && projectIconsDiv.classList.contains('show')) {
-          
-              const allProjectsLinks = document.querySelectorAll('.project-link');
-              allProjectsLinks[index].classList.add('selected-link');
-              const editedProject = allProjectsLinks[projectIndex];
+        // EDIT A PROJECT IN PROJECTS ARRAY
+        } else if (modalAction === 'edit' && projectIconsDiv.classList.contains('show')) {
+      
+          const allProjectsLinks = document.querySelectorAll('.project-link');
+          allProjectsLinks[index].classList.add('selected-link');
+          const editedProject = allProjectsLinks[projectIndex];
 
-              projects.editProject(projectDomIcon, modalTitleText, projectIndex, clickedLink);
-              changeMainTitle(selectedLink, projectIndex); // Change main title to icon and text of selected project
+          projects.editProject(projectDomIcon, modalTitleText, projectIndex, clickedLink);
+          changeMainTitle(editedProject, projectIndex); // Change main title to icon and text of selected project
 
-              // DELETE A PROJECT FROM ARRAY
-            } else if (modalAction === 'delete' && !projectDeletionText.classList.contains('hide')) {
-              const allTasksLink = document.querySelector('.link:first-child');
-              projects.deleteProject(projectIndex);
-              allTasksLink.classList.add('selected-link');
+        // DELETE A PROJECT FROM PROJECTS ARRAY
+        } else if (modalAction === 'delete' && !projectDeletionText.classList.contains('hide')) {
+          const allTasksLink = document.querySelector('.link:first-child');
+          projects.deleteProject(projectIndex);
+          allTasksLink.classList.add('selected-link');
 
-              // DELETE A TASK FROM ARRAY
-            } else if (modalAction === 'delete' && projectDeletionText.classList.contains('hide')) {
-              tasks.deleteTask(projectIndex, taskIndex);
-        
-              // ADD A TASK TO ARRAY
-            } else if (modalAction === 'add' && projectIconsDiv.classList.contains('hide')) {
-              const selectedLink = document.querySelector('.selected-link');
-              const selectedProject = selectedLink.getAttribute('data-link-index');
-              let taskPriority;
+          // DELETE A TASK FROM ARRAY
+        } else if (modalAction === 'delete') {
+          tasks.deleteTask(projectIndex, taskIndex);
+    
+          // ADD A TASK TO ARRAY
+        } else if (modalAction === 'add' && projectIconsDiv.classList.contains('hide')) {
+          const selectedLink = document.querySelector('.selected-link');
+          const selectedProject = selectedLink.getAttribute('data-link-index');
+          let taskPriority;
 
-              // CHECK TASK PRIORITY
-              if (taskPrioritySelection.value === 'low') {
-                taskPriority = 'low';
-              } else if (taskPrioritySelection.value === 'medium') {
-                taskPriority = 'medium';
-              } else if (taskPrioritySelection.value === 'high') {
-                taskPriority = 'high';
-              } else {
-                taskPriority = '';
-              }
-
-              tasks.addTask(selectedProject, modalTitleText, taskDescription.value, taskDueDate.value, taskPriority);
-
-              // EDIT TASK FROM ARRAY 
-            } else if (modalAction === 'edit' && projectIconsDiv.classList.contains('hide')) {
-              const taskNewTitle = modalTitle.value;
-              const taskNewDescription = taskDescription.value;
-              const taskNewDate = taskDueDate.value;
-              const taskNewPriority = taskPrioritySelection.value;
-
-              tasks.editTask(taskNewTitle, taskNewDescription, taskNewDate, taskNewPriority, projectIndex, taskIndex);
-            }
-          } else if (modalAction === 'delete' && !projectDeletionText.classList.contains('hide')) {
-            const allTasksLink = document.querySelector('.link:first-child');
-            
-            projects.deleteProject(projectIndex);
-            allTasksLink.classList.add('selected-link');
-
-          } else if (modalAction === 'delete' && projectDeletionText.classList.contains('hide')) {
-            tasks.deleteTask(projectIndex, taskIndex);
-
-            // IF TASK DELETED FROM CLICKED MENU LINK
-            if (clickedLink.classList.contains('menu-link')) {
-              menuTitle = clickedLink.getAttribute('data-title');
-
-            // IF TASK DELETED FROM CLICKED PROJECTS LINK
-            } else if (clickedLink.classList.contains('project-link')) {
-              menuTitle = 'project';
-            }
-            getTasks(menuTitle, projectIndex);
+          // CHECK TASK PRIORITY
+          if (taskPrioritySelection.value === 'low') {
+            taskPriority = 'low';
+          } else if (taskPrioritySelection.value === 'medium') {
+            taskPriority = 'medium';
+          } else if (taskPrioritySelection.value === 'high') {
+            taskPriority = 'high';
+          } else {
+            taskPriority = '';
           }
+
+          tasks.addTask(selectedProject, modalTitleText, taskDescription.value, taskDueDate.value, taskPriority);
+          getTasks('project', projectIndex);
+
+          // IF TASK IS GOING TO BE EDITED OR DELETED
+        } else if (modalAction === 'edit' || modalAction === 'delete') {
+          let menuTitle;
+
+          // IF TASK DELETED FROM CLICKED MENU LINK
+          if (clickedLink.classList.contains('menu-link')) {
+            menuTitle = clickedLink.getAttribute('data-title');
+
+          // IF TASK DELETED FROM CLICKED PROJECTS LINK
+          } else if (clickedLink.classList.contains('project-link')) {
+            menuTitle = 'project';
+          }
+
+        
+        // DELETE PROJECT FROM PROJECTS ARRAY
+        } else if (modalAction === 'delete' && !projectDeletionText.classList.contains('hide')) {        
+          projects.deleteProject(projectIndex);
+          menuLinkAll.classList.add('selected-link');
+          addTaskButton.classList.add('hide');
+
+        } 
+
+        
+        
+
+        // EDIT TASK IN TASKS ARRAY
+        if (modalAction === 'edit') {
+          const taskNewTitle = modalTitle.value;
+          const taskNewDescription = taskDescription.value;
+          const taskNewDate = taskDueDate.value;
+          const taskNewPriority = taskPrioritySelection.value;
+
+          tasks.editTask(
+            taskNewTitle,
+            taskNewDescription,
+            taskNewDate,
+            taskNewPriority,
+            projectIndex,
+            taskIndex
+          );
+
+        }
       }
 
     function showProjects() {
