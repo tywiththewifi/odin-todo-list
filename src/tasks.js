@@ -13,7 +13,7 @@ const tasks = (() => {
         }
     }
 
-    function addTask(index, title, description, date, priority, projectIndex, taskIndex) {
+    function addTask(title, description, date, priority, projectIndex, taskIndex) {
         const task = new Task(title, description, date, priority, projectIndex, taskIndex);
         projects.projectList[projectIndex].tasks.push(task);
         console.log('Add a task!');
@@ -22,15 +22,24 @@ const tasks = (() => {
     function deleteTask(projectIndex, taskIndex) {
         if (projectIndex > -1) {
             projects.projectList[projectIndex].tasks.splice(taskIndex, 1);
-            dom.showTasks('', projectIndex, projects.projectList.length);
             dom.getTasks('all');
         }
+    }
+
+    function editTask(title, description, date, priority, projectIndex, taskIndex) {
+        projects.projectList[projectIndex].tasks[taskIndex].title = title;
+        projects.projectList[projectIndex].tasks[taskIndex].description = description;
+        projects.projectList[projectIndex].tasks[taskIndex].date = date;
+        projects.projectList[projectIndex].tasks[taskIndex].priority = priority;
+        dom.getTasks('project', projectIndex);
     }
 
     return {
         addTask,
         deleteTask,
+        editTask,
     };
+
 })();
 
 export default tasks;

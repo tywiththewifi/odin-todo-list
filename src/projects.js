@@ -27,11 +27,11 @@ const projects = (() => {
         console.log(project, projectList);
     }
 
-    function editProject(icon, title, index, target) {
+    function editProject(icon, title, index, link) {
         projectList[index].icon = icon;
         projectList[index].title = title;
         dom.showProjects();
-        dom.selectLink(target, index, 'edit');
+        dom.selectLink(link, index, 'edit');
     }
 
     return {
