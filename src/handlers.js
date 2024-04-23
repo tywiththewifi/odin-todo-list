@@ -121,14 +121,14 @@ const handlers = (() => {
                         projectIndex = parseInt(selectedLink.getAttribute(data-link-index), 10);
 
                         // If deletion text is shown
-                        dom.validateModal('delete', projectIndex);
+                        dom.validateModal('delete', projectIndex, '', selectedLink);
                         dom.changeMainTitle(target, 0); // After deleting a project - change icon to 'fa-calendar-alt' (menu link 'all')
                         dom.showMainTitle(0); // After deleting a project - show main title as 'All'
                         dom.getTasks('all'); // After deleting a project - show all tasks from all remaining projects
                     
                     // DELETE A TASK
                     } else if (projectDeletionText.classList.contains('hide')) {
-                        dom.validateModal('delete', projectIndex, taskIndex);
+                        dom.validateModal('delete', projectIndex, taskIndex, selectedLink);
                     }
                 }
             }

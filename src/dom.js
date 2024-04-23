@@ -21,30 +21,30 @@ const dom = (() => {
     const taskPrioritySelection = modal.querySelector('.task-priority');
 
     function responsiveMenu() {
-        if (window.innerWidth <= 1000) {
-            toggleMenuIcon.classList.remove('active');
+      if (window.innerWidth <= 1000) {
+          toggleMenuIcon.classList.remove('active');
 
-            // HIDE SIDEBAR AND MAKE IT OPAQUE
-            sidebarMenu.classList.remove('show-sidebar');
-            sidebarMenu.classList.add('hide-sidebar');
-            sidebarMenu.classList.add('add-z-index')
-            
-            // EXPAND MAIN CONTENT
-            mainContent.classList.remove('contract-main');
-            mainContent.classList.add('expand-main');
-        } else {
+          // HIDE SIDEBAR AND MAKE IT OPAQUE
+          sidebarMenu.classList.remove('show-sidebar');
+          sidebarMenu.classList.add('hide-sidebar');
+          sidebarMenu.classList.add('add-z-index')
+          
+          // EXPAND MAIN CONTENT
+          mainContent.classList.remove('contract-main');
+          mainContent.classList.add('expand-main');
+      } else {
 
-            // SHOW SIDEBAR AND MAKE MAIN CONTNET A BIT TRANSPARENT
-            sidebarMenu.classList.remove('hide-sidebar');
-            sidebarMenu.classList.add('show-sidebar');
-            sidebarMenu.classList.remove('add-z-index');
+          // SHOW SIDEBAR AND MAKE MAIN CONTNET A BIT TRANSPARENT
+          sidebarMenu.classList.remove('hide-sidebar');
+          sidebarMenu.classList.add('show-sidebar');
+          sidebarMenu.classList.remove('add-z-index');
 
-            // CONTRACT MAIN CONTENT AND MAKE MAIN CONTENT OPAQUE
-            mainContent.classList.remove('expand-main');
-            mainContent.classList.add('contract-main');
-            mainContent.classList.remove('inactive-main');
+          // CONTRACT MAIN CONTENT AND MAKE MAIN CONTENT OPAQUE
+          mainContent.classList.remove('expand-main');
+          mainContent.classList.add('contract-main');
+          mainContent.classList.remove('inactive-main');
 
-        }
+      }
     }
 
     function toggleMenu() {
@@ -399,7 +399,7 @@ const dom = (() => {
                   confirmButton.classList.add('confirm-deletion');
               
               // TO CLOSE THE MODAL
-              } else if (state === 'close') {
+              } else if (modalState === 'close') {
                   modal.classList.add('hide');
               }
 
@@ -417,7 +417,7 @@ const dom = (() => {
             taskDeletionText.classList.remove('hide');
             taskDeletionTitle.textContent = projects.projectsList[projectIndex].tasks[taskIndex].title;
         }
-    }
+      }
     }
 
     function validateModal(modalAction, projectIndex, taskIndex, target, clickedLink) {
@@ -426,7 +426,9 @@ const dom = (() => {
         const projectIconsDiv = modal.querySelector('.radio-form');
         const modalTitleText = modalTitle.value;
         const projectDeletionText = document.querySelector('.project-deletion-text');
+        let menuTitle = clickedLink.getAttribute('data-title');
 
+        // MODALS TO ADD AND EDIT PROJECTS AND TASKS
         if (modalAction === 'add' || modalAction === 'edit') {
             if (modalTitleText === '') {
                 modalTitleError.classList.remove('hide');
@@ -500,6 +502,16 @@ const dom = (() => {
 
           } else if (modalAction === 'delete' && projectDeletionText.classList.contains('hide')) {
             tasks.deleteTask(projectIndex, taskIndex);
+
+            // IF TASK DELETED FROM CLICKED MENU LINK
+            if (clickedLink.classList.contains('menu-link')) {
+              menuTitle = clickedLink.getAttribute('data-title');
+
+            // IF TASK DELETED FROM CLICKED PROJECTS LINK
+            } else if (clickedLink.classList.contains('project-link')) {
+              menuTitle = 'project';
+            }
+            getTasks(menuTitle, projectIndex);
           }
       }
 
