@@ -36,4 +36,5 @@
 * Used **CSS Grid** and **CSS Flexbox** modules to create layout.
 * Made project to be **mobile responsive**.
 * Cross tested on **Firefox** and **Chromium** browsers.
+* Learned how to implement **local storage**.
 * Overall, I have **improved my learning abilities** A LOT! 🧠
