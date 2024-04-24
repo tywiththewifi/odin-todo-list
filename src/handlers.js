@@ -69,6 +69,7 @@ const handlers = (() => {
 
             // MODAL TO DELETE A PROJECT
             } else if (target.classList.contains('delete-project')) {
+                dom.selectLink()
                 dom.manipulateModal('show', 'Delete Project', 'Delete', projectIndex);
             }
                 

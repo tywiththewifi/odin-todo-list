@@ -117,6 +117,15 @@ const dom = (() => {
       // GENERATE TASKS LIST
       for (let i = projectIndexStart; i < projectIndexEnd; i++) {
         for (let j = 0; j < projects.projectList[i].tasks.length; j++) {
+          const taskDiv = document.createElement('div');
+          const taskIconAndTextDiv = document.createElement('div');
+          const taskIcon = document.createElement('i');
+          const taskText = document.createElement('p');
+          const taskInfo = document.createElement('div');
+          const taskDate = document.createElement('p');
+          const taskEditIcon = document.createElement('i');
+          const taskTrashIcon = document.createElement('i');
+          const taskInfoIcon = document.createElement('i');
 
           // IF CLICKED ON MENU LINK 'IMPORTANT' - FILTER NOT IMPORTANT TASKS
           if (menuTitle === 'important' && projects.projectList[i].tasks[j].priority !== 'high') {
@@ -145,16 +154,6 @@ const dom = (() => {
             continue;
           }
 
-          const taskDiv = document.createElement('div');
-          const taskIconAndTextDiv = document.createElement('div');
-          const taskIcon = document.createElement('i');
-          const taskText = document.createElement('p');
-          const taskInfo = document.createElement('div');
-          const taskDate = document.createElement('p');
-          const taskEditIcon = document.createElement('i');
-          const taskTrashIcon = document.createElement('i');
-          const taskInfoIcon = document.createElement('i');
-
            // SHOW NUMBER OF TASKS
           tasksNumber += 1;
           tasksCount.textContent = tasksNumber;
@@ -165,42 +164,36 @@ const dom = (() => {
           // TASK PRIORITY, TEXT AND ITS DIV
           taskDiv.classList.add('task-div', 'hover-element');
           taskIconAndTextDiv.classList.add('flex');
+          taskDiv.setAttribute('data-project-index', i);
+          taskDiv.setAttribute('data-task-index', j);
 
+          if (projects.projectList[i].tasks[j].priority === 'low') {
+            taskIcon.classList.add('low-priority');
+          } else if (projects.projectList[i].tasks[j].priority === 'medium') {
+            taskIcon.classList.add('mid-priority');
+          } else if (projects.projectList[i].tasks[j].priority === 'high') {
+            taskIcon.classList.add('high-priority');
+          } else {
+            taskIcon.classList.add('fa-solid', 'padding-right');
+          }
+          taskIcon.setAttribute('data-project-index', i);
+          taskIcon.setAttribute('data-task-index', j);
 
-        
+          taskText.classList.add('task-text');
+          taskText.textContent = projects.projectList[i].tasks[j].title;
+          taskText.setAttribute('data-project-index', i);
+          taskText.setAttribute('data-task-index', j);
 
-        if (projects.projectList[i].tasks[j].priority === 'low') {
-          taskIcon.classList.add('low-priority');
-        } else if (projects.projectList[i].tasks[j].priority === 'medium') {
-          
-          taskIcon.classList.add('mid-priority');
+          // TASK INFO DIV
+          taskInfo.classList.add('flex');
 
-        } else if (projects.projectList[i].tasks[j].priority === 'high') {
-
-          taskIcon.classList.add('high-priority');
-
-        } else {
-
-          taskIcon.classList.add('fa-solid', 'padding-right');
-        }
-        taskIcon.setAttribute('data-project-index', i);
-        taskIcon.setAttribute('data-task-index', j);
-
-        taskText.classList.add('task-text');
-        taskText.textContent = projects.projectList[i].tasks[j].title;
-        taskText.setAttribute('data-project-index', i);
-        taskText.setAttribute('data-task-index', j);
-
-        // TASK INFO DIV
-        taskInfo.classList.add('flex');
-
-        // TASKS DUE DATE
-        taskDate.classList.add('due-date', 'padding-right');
-            if (projects.projectList[i].tasks[j].date !== undefined) {
-                taskDate.textContent = projects.projectList[i].tasks[j].date;
-            } else {
-                taskDate.textContent = '';
-        }
+          // TASKS DUE DATE
+          taskDate.classList.add('due-date', 'padding-right');
+          if (projects.projectList[i].tasks[j].date !== undefined) {
+              taskDate.textContent = projects.projectList[i].tasks[j].date;
+          } else {
+              taskDate.textContent = '';
+          }
 
           // TASK DEFAULT ICONS
           taskEditIcon.classList.add('fa-solid', 'fa-edit', 'edit-task', 'task-icon', 'scale-element', 'padding-right');
@@ -242,6 +235,9 @@ const dom = (() => {
     let projectIndexStart;
     let projectIndexEnd;
 
+    // SAVE PROJECTS WITH TASKS TO LOCAL STORAGE
+    localStorage.setItem('projects', JSON.stringify(projects.projectList));
+
     // IF CLICKED ON PROJECT LINK
     if (menuTitle === 'project') { // If number of index exists - project was clicked
 
@@ -281,36 +277,36 @@ const dom = (() => {
     if (target.classList.contains('link')) {
         target.classList.add('selected-link');
 
+        // IF WAS CLICKED TO EDIT PROJECT LINK
         if (action === 'edit') {
           allProjectsLinks[index].classList.add('selected-link');
         }
     
     // IF CLICKED ON MENU LINK ICON OR TEXT
     } else if (target.classList.contains('menu-link-icon')
-            || target.classList.contains('menu-link-text')) {
-            target.parentElement.classList.add('selected-link');
+        || target.classList.contains('menu-link-text')) {
+        target.parentElement.classList.add('selected-link');
+        }
 
     // IF CLICKED SOMEWHERE ON PROJECT LINK
-    } else if (target.classList.contains('project')) {
+    if (target.classList.contains('project')) {
     
     // SHOW BUTTON TO ADD A TASK TO SELECTED PROJECT
     addTaskButton.classList.remove('hide');
     getTasks('project', index);
-    }
-    
-    // IF CLICKED DIRECTLY ON PROJECT LINK
-    if (target.classList.contains('project-link')) {
-    target.classList.add('selected-link');
 
-    // IF CLICKED ON PROJECT ICON OR TEXT
-    } else if (target.classList.contains('project-icon')
-          || target.classList.contains('project-text')) {
-    target.parentElement.parentElement.classList.add('selected-link');
+      // IF CLICKED ON PROJECT ICON OR TEXT
+      if (target.classList.contains('project-icon')
+            || target.classList.contains('project-text')
+            || target.classList.contains('edit-project')
+            || target.classList.contains('delete-project')) {
+      target.parentElement.parentElement.classList.add('selected-link');
 
-    // IF CLICKED ON PROJECT ELEMENTS DIVS
-    } else if (target.classList.contains('project-icon-and-text-div')
-          || target.classList.contains('project-default-icons-div')) {
-    target.parentElement.classList.add('selected-link');
+      // IF CLICKED ON PROJECT ELEMENTS DIVS
+      } else if (target.classList.contains('project-icon-and-text-div')
+            || target.classList.contains('project-default-icons-div')) {
+      target.parentElement.classList.add('selected-link');
+      }
     }
 
     // IF CLICKED SOMEWHERE ON MENU LINK
@@ -319,7 +315,7 @@ const dom = (() => {
         target.classList.contains('menu-link-icon') ||
         target.classList.contains('menu-link-text')
     ) {
-        dom.getTasks(menuTitle);
+        getTasks(menuTitle);
     }
   }
 
@@ -531,7 +527,6 @@ const dom = (() => {
           }
 
           tasks.addTask(modalTitleText, taskDescription.value, taskDueDate.value, taskPriority, projectIndex);
-          getTasks('project', projectIndex);
 
           // IF TASK IS GOING TO BE EDITED OR DELETED
         } else if (modalAction === 'edit' || modalAction === 'delete') {
@@ -579,6 +574,9 @@ const dom = (() => {
       console.log('Preparing to display projects');
 
       const projectsCount = document.querySelector('.projects-count');
+
+      // SAVE PROJECTS TO LOCAL STORAGE
+      localStorage.setItem('projects', JSON.stringify(projects.projectList));
       
       // SHOW NUMBER OF PROJECTS
       projectsCount.textContent = projects.projectList.length;

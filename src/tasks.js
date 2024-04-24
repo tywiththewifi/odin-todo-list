@@ -63,6 +63,9 @@ const tasks = (() => {
             clickedLink = selectedLink.getAttribute('data-title');
         }
         dom.getTasks(clickedLink, projectIndex);
+
+        // // SAVE TASKS TO LOCAL STORAGE
+        // localStorage.setItem('projects', JSON.stringify(projects.projectList));
     }
 
     return {
