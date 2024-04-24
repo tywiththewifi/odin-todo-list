@@ -226,9 +226,10 @@ const dom = (() => {
             taskText.classList.add('task-done-text');
             taskIcon.classList.add('fa-solid', 'fa-check-circle', 'padding-right');
           }
-        manipulateModal('close');
       }
     }
+    manipulateModal('close');
+
   }
 
   function getTasks(menuTitle, projectIndex) {
@@ -504,11 +505,7 @@ const dom = (() => {
           console.log("Attempting to delete project at index:", projectIndex); // Debug line
           projects.deleteProject(projectIndex);
           allTasksLink.classList.add('selected-link');
-
-          // DELETE A TASK FROM ARRAY
-        } else if (modalAction === 'delete') {
-          tasks.deleteTask(projectIndex, taskIndex);
-    
+          
           // ADD A TASK TO ARRAY
         } else if (modalAction === 'add' && projectIconsDiv.classList.contains('hide')) {
           const selectedLink = document.querySelector('.selected-link');
@@ -532,42 +529,40 @@ const dom = (() => {
         } else if (modalAction === 'edit' || modalAction === 'delete') {
           let menuTitle;
 
-          // IF TASK DELETED FROM CLICKED MENU LINK
+          // IF TASK EDITED OR DELETED FROM CLICKED MENU LINK
           if (clickedLink.classList.contains('menu-link')) {
             menuTitle = clickedLink.getAttribute('data-title');
 
-          // IF TASK DELETED FROM CLICKED PROJECTS LINK
+          // IF TASK EDITED OR DELETED FROM CLICKED PROJECTS LINK
           } else if (clickedLink.classList.contains('project-link')) {
             menuTitle = 'project';
           }
 
         
-        // DELETE PROJECT FROM PROJECTS ARRAY
-        } else if (modalAction === 'delete' && !projectDeletionText.classList.contains('hide')) {        
-          projects.deleteProject(projectIndex);
-          menuLinkAll.classList.add('selected-link');
-          addTaskButton.classList.add('hide');
+          // EDIT TASK IN TASKS ARRAY
+          if (modalAction === 'edit') {
+            const taskNewTitle = modalTitle.value;
+            const taskNewDescription = taskDescription.value;
+            const taskNewDate = taskDueDate.value;
+            const taskNewPriority = taskPrioritySelection.value;
 
-        } 
-        
-        // EDIT TASK IN TASKS ARRAY
-        if (modalAction === 'edit') {
-          const taskNewTitle = modalTitle.value;
-          const taskNewDescription = taskDescription.value;
-          const taskNewDate = taskDueDate.value;
-          const taskNewPriority = taskPrioritySelection.value;
+            tasks.editTask(
+              taskNewTitle,
+              taskNewDescription,
+              taskNewDate,
+              taskNewPriority,
+              projectIndex,
+              taskIndex
+            );
 
-          tasks.editTask(
-            taskNewTitle,
-            taskNewDescription,
-            taskNewDate,
-            taskNewPriority,
-            projectIndex,
-            taskIndex
-          );
-
+          // DELETE A TASK FROM ARRAY
+          } else if (modalAction === 'delete') {
+            tasks.deleteTask(projectIndex, taskIndex);
+            manipulateModal('close');
+          }
+          getTasks(menuTitle, projectIndex);
         }
-      }
+    }
 
     function showProjects() {
 
