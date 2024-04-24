@@ -591,6 +591,11 @@ transform: rotate(-45deg);
 .task-deletion-title {
   font-weight: 700;
 }
+
+.task-deletion-text, 
+.project-deletion-text {
+    margin-bottom: 20px;
+}
   
 
 /* RESPONSIVE */

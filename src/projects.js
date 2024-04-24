@@ -15,8 +15,11 @@ const projects = (() => {
     }
 
     function deleteProject(index) {
-        if (index > -1) {
+        if (index > -1 && index < projectList.length) {
             projectList.splice(index, 1);
+            console.log("Project deleted. Remaining projects:", projects.projectList); 
+        } else {
+            console.error("Invalid project index for deletion:", projectIndex);
         }
         dom.showProjects();
     }
@@ -25,6 +28,8 @@ const projects = (() => {
         const project = new Project(icon, title);
         projectList.push(project);
         console.log(project, projectList);
+        dom.showProjects();
+        dom.manipulateModal('close');
     }
 
     function editProject(icon, title, index, link) {

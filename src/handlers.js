@@ -18,7 +18,9 @@ const handlers = (() => {
         let taskIndex;
 
         document.addEventListener('click', (event) => {
-            console.log('Click event triggered:', event.target);
+            console.log("Clicked element:", event.target);
+            console.log("Closest .link element:", event.target.closest('.link'));
+            // other debug information
             
             const { target } = event;
             const modalMainTitle = document.querySelector('.modal-main-title');
@@ -106,7 +108,6 @@ const handlers = (() => {
 
                     // EDIT A PROJECT
                     if (modalMainTitle.textContent === 'Edit Project') {
-                        
                         dom.validateModal('edit', projectIndex, '', selectedLink);
 
                     // EDIT A TASK
@@ -120,7 +121,7 @@ const handlers = (() => {
 
                     // DELETE A PROJECT 
                     if (!projectDeletionText.classList.contains('hide')) {
-                        projectIndex = parseInt(selectedLink.getAttribute(data-link-index), 10);
+                        projectIndex = parseInt(selectedLink.getAttribute('data-link-index'), 10);
 
                         // If deletion text is shown
                         dom.validateModal('delete', projectIndex, '', selectedLink);
@@ -137,20 +138,20 @@ const handlers = (() => {
             
                 
                 
-                // CLOSE MODAL
-                if (target.classList.contains('close')) {
-                    dom.manipulateModal('close');
-                }
+            // CLOSE MODAL
+            if (target.classList.contains('close')) {
+                dom.manipulateModal('close');
+            }
 
-                // MARK TASK AS COMPLETED
-                if (target.classList.contains('task-div') ||
-                    target.classList.contains('fa-circle') ||
-                    target.classList.contains('fa-check-circle') ||
-                    target.classList.contains('task-text')) {
-                        projectIndex = parseInt(target.getAttribute('data-project-index'), 10);
-                        taskIndex = parseInt(target.getAttribute('data-task-index'), 10);
-                        tasks.toggleTaskCompletion(projectIndex, taskIndex, selectedLink);
-                    }
+            // MARK TASK AS COMPLETED
+            if (target.classList.contains('task-div') ||
+                target.classList.contains('fa-circle') ||
+                target.classList.contains('fa-check-circle') ||
+                target.classList.contains('task-text')) {
+                    projectIndex = parseInt(target.getAttribute('data-project-index'), 10);
+                    taskIndex = parseInt(target.getAttribute('data-task-index'), 10);
+                    tasks.toggleTaskCompletion(projectIndex, taskIndex, selectedLink);
+                }
             
             
         });

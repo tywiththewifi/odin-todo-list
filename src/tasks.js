@@ -1,4 +1,5 @@
 import projects from "./projects";
+import dom from './dom';
 
 const tasks = (() => {
     class Task {
@@ -16,15 +17,27 @@ const tasks = (() => {
 
     function addTask(title, description, date, priority, projectIndex, taskIndex) {
         const task = new Task(title, description, date, priority, projectIndex, taskIndex);
+
         projects.projectList[projectIndex].tasks.push(task);
+        dom.getTasks('project', projectIndex);
         console.log('Add a task!');
     }
 
     function deleteTask(projectIndex, taskIndex) {
-        if (projectIndex > -1) {
-            projects.projectList[projectIndex].tasks.splice(taskIndex, 1);
-            dom.getTasks('all');
+        if (projectIndex > -1 && projectIndex < projects.projectList.length) {
+            // projects.projectList[projectIndex].tasks.splice(taskIndex, 1);
+            // dom.getTasks('all');
+            let projectTasks = projects.projectList[projectIndex].tasks;
+            if (taskIndex >= 0 && taskIndex < projectTasks.length) {
+                projectTasks.splice(taskIndex, 1);
+                dom.getTasks('project', projectIndex);
+            } else {
+                console.error("Invalid task index:", taskIndex);
+            }
+        } else {
+            console.log('invalid project index:', projectIndex)
         }
+        
     }
 
     function editTask(title, description, date, priority, projectIndex, taskIndex) {
@@ -38,10 +51,10 @@ const tasks = (() => {
     function toggleTaskCompletion(projectIndex, taskIndex, selectedLink) {
         let clickedLink;
 
-        if (projects.projectsList[projectIndex].tasks[taskIndex].completed === false) {
-            projects.projectsList[projectIndex].tasks[taskIndex].completed = true;
+        if (projects.projectList[projectIndex].tasks[taskIndex].completed === false) {
+            projects.projectList[projectIndex].tasks[taskIndex].completed = true;
         } else {
-            projects.projectsList[projectIndex].tasks[taskIndex].completed = false;
+            projects.projectList[projectIndex].tasks[taskIndex].completed = false;
         }
 
         if (selectedLink.classList.contains('project')) {
